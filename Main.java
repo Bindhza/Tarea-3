@@ -145,7 +145,7 @@ class Expendedor{
 
     public Bebida comprarBebida(Moneda moneda, int num){
 
-        if(moneda != null){
+        if(moneda != null){ //revisa si es que tiene moneda
             if(moneda.getValor() >= precioBebida) {
                 if (num == COCA) { //Coca Cola
                     Bebida tmp = coca.getBebida();
