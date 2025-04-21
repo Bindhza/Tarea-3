@@ -1,25 +1,24 @@
 package org.example;
 import java.util.ArrayList;
 
-public class Deposito {
-    private ArrayList<Bebida> list;
+public class Deposito<T> {
+    private ArrayList<T> deposito;
 
     public Deposito(){
-        list = new ArrayList();
+        deposito = new ArrayList<T>();
     }
 
-    public void addBebida(Bebida bbd){
-        list.add(bbd);
+    public void addObjeto(T objeto){
+        deposito.add(objeto);
     }
 
-    public Bebida getBebida(){
-        if(list.size() == 0) {
+    public T getObjeto(){
+        if(deposito.isEmpty()) {
 
             return null;
         }
         else{
-            Bebida tmp = list.get(0);
-            list.remove(0);
+            T tmp = deposito.removeFirst();
             return tmp;
         }
     }
