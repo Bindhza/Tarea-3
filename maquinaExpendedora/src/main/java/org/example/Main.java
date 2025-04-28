@@ -1,3 +1,9 @@
+/**
+ * Maquina expendedora
+ * @author Maximo Beltran
+ * @author Benjamin Poblete
+ */
+
 package org.example;
 import java.util.ArrayList;
 
