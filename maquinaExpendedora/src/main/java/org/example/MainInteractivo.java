@@ -31,12 +31,14 @@ public class MainInteractivo {
 
             System.out.println("Desea comprar algun producto? (Si/No)");
             entrada = scan.nextLine();
+            System.out.println(entrada);
             entrada = entrada.toUpperCase();
+            System.out.println(entrada);
             System.out.println();
             System.out.println();
 
-            if(entrada == "NO"){salida = 0;}
-            else if(entrada == "SI"){
+            if(entrada.equals("NO")){salida = 0;}
+            else if(entrada.equals("SI")){
                 System.out.println("Con que moneda desea pagar?(seleccione una opcion)");
                 System.out.println("   1.  100");
                 System.out.println("   2.  500");
