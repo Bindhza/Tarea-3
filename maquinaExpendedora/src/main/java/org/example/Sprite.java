@@ -1,11 +1,10 @@
 package org.example;
 
 public class Sprite extends Bebida{
-    public Sprite(int serie){
-        super(serie);
+    public Sprite(){
+        super(750,"sprite");
     }
     public String beber(){
-        String tmp = "sprite";
-        return tmp;
+        return sabor;
     }
 }

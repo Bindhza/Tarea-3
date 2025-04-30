@@ -9,7 +9,7 @@ public class Comprador {
         if (producto != null) {
             sonido = producto.beber();
         } else {
-            sonido =null;
+            sonido = null;
         }
         vuelto = 0;
         Moneda tmp = exp.getVuelto();
