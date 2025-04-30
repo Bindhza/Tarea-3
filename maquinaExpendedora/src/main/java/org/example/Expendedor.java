@@ -28,7 +28,7 @@ public class Expendedor {
         return monedas.getObjeto();
     }
 
-    public Producto comprar(Moneda moneda, int codigo) throws NoHayProductoException, PagoIncorrectoException, PagoInsuficienteException {
+    public Producto comprarProducto(Moneda moneda, int codigo) throws NoHayProductoException, PagoIncorrectoException, PagoInsuficienteException {
         if (moneda == null){throw new PagoIncorrectoException();}
         IndiceProductos indice = switch (codigo) {
             case 1 -> IndiceProductos.CocaCola;

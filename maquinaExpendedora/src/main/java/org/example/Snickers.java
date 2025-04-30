@@ -2,6 +2,6 @@ package org.example;
 
 public class Snickers extends Dulce{
      public Snickers(){
-        super(IndiceProductos.Snickers.precio, "snickers");
+        super(IndiceProductos.Snickers.precio,IndiceProductos.Snickers.getNombre());
      }
 }

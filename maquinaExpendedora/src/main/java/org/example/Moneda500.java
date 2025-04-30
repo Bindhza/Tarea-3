@@ -1,6 +1,6 @@
 package org.example;
 
-public class Moneda500 {
+public class Moneda500 extends Moneda {
     public Moneda500(){
         super();
     }

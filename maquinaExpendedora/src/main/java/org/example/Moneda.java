@@ -3,7 +3,7 @@ package org.example;
 /**
  * Clase abstracta que para generar objetos del tipo moneda
  */
-public abstract class Moneda {
+public abstract class Moneda implements Comparable<Moneda> {
 
     public Moneda(){
     }
@@ -21,4 +21,21 @@ public abstract class Moneda {
      * @return el valor int de la moneda
      */
     public abstract int getValor();
+
+
+    @Override
+    public String toString() {
+        return hashCode() + ": " + getValor() + " pesos";
+    }
+
+    /**
+     * Implementacion de la interfaz Comparable
+     * @param o la moneda a la que se compara por valor.
+     * @return cero si son iguales en valor, negativo si la otra es mayor,
+     *          positivo si esta lo es
+     */
+    @Override
+    public int compareTo(Moneda o) {
+        return Integer.compare(this.getValor(), o.getValor());
+    }
 }

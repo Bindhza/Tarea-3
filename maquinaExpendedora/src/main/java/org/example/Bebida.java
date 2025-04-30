@@ -6,5 +6,5 @@ public abstract class Bebida extends Producto{
     }
     public String beber(){
         return sabor;
-    };
+    }
 }

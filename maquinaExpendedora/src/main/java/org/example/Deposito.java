@@ -6,13 +6,13 @@ import java.util.ArrayList;
  * @param <T> tipo producto
  */
 public class Deposito<T> {
-    private ArrayList<T> deposito;
+    private final ArrayList<T> deposito;
 
     /**
      * en el constructor se crea la nueva instancia del ArrayList del deposito
      */
     public Deposito(){
-        deposito = new ArrayList<T>();
+        deposito = new ArrayList<>();
     }
 
     /**
@@ -25,7 +25,7 @@ public class Deposito<T> {
 
     /**
      * Saca un objeto del deposito en en caso de que exista, si no retorna null
-     * @return producto seleccionado
+     * @return producto seleccionado o null si no lo encuentra
      */
     public T getObjeto(){
         if(deposito.isEmpty()) {
@@ -33,10 +33,15 @@ public class Deposito<T> {
             return null;
         }
         else{
-            T tmp = deposito.removeFirst();
-            return tmp;
+            return deposito.removeFirst();
+
         }
     }
+
+    /**
+     * Verifica si el deposito esta vacio
+     * @return true si esta vacio, false si no lo está
+     */
     public boolean estaVacio(){
         return deposito.isEmpty();
     }
