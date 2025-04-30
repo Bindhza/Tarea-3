@@ -14,7 +14,15 @@ public enum IndiceProductos {
         this.nombre = nombre;
     }
 
+    /**
+     * regresa el precio del producto
+     * @return el precio del producto
+     */
     public int getPrecio() {return precio;}
 
+    /**
+     * regresa el nombre del producto
+     * @return el nombre del producto
+     */
     public String getNombre() {return nombre;}
 }

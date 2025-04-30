@@ -30,12 +30,29 @@ public class Expendedor {
         }
     }
 
+    /**
+     * accede al deposito de monedas y entrega una moneda de este
+     * @return una moneda del deposito de monedas, o null si no hay ninguna
+     */
     public Moneda getVuelto(){
         return monedas.getObjeto();
     }
 
+    /**
+     * metodo principal de Expendedor con el cual se compra un producto
+     * @param moneda la moneda con la cual se compra el producto
+     * @param codigo el codigo que identifica al producto
+     * @return el producto comprado
+     * @throws NoHayProductoException en caso de que el codigo no lo maneje la maquina
+     * o si el producto esta fuera de stock
+     * @throws PagoIncorrectoException si se paga con una moneda invalida
+     * @throws PagoInsuficienteException si el monto pagado no es suficiente
+     */
     public Producto comprarProducto(Moneda moneda, int codigo) throws NoHayProductoException, PagoIncorrectoException, PagoInsuficienteException {
-        if (moneda == null){throw new PagoIncorrectoException();}
+        if (moneda == null) {
+            throw new PagoIncorrectoException();
+        }
+
         IndiceProductos indice = switch (codigo) {
             case 1 -> IndiceProductos.CocaCola;
             case 2 -> IndiceProductos.Fanta;

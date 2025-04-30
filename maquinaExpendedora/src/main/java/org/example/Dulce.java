@@ -6,6 +6,10 @@ public abstract class Dulce extends Producto{
         super(precio,sabor);
     }
 
+    /**
+     * Come el dulce y registra su sabor
+     * @return sabor del dulce
+     */
     public String comer(){
         return sabor;
     }

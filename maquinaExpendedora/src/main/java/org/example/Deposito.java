@@ -29,15 +29,10 @@ public class Deposito<T> {
      */
     public T getObjeto(){
         if(deposito.isEmpty()) {
-
             return null;
         }
         else{
-            T tmp = deposito.get(0);
-            deposito.removeFirst();
-
-            return tmp;
-
+            return deposito.removeFirst();
         }
     }
 

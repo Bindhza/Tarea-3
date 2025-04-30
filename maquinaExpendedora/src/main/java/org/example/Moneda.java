@@ -22,7 +22,10 @@ public abstract class Moneda implements Comparable<Moneda> {
      */
     public abstract int getValor();
 
-
+    /**
+     * Overriding del metodo toString
+     * @return una cadena que contiene el hashcode de la moneda, y su valor en pesos
+     */
     @Override
     public String toString() {
         return hashCode() + ": " + getValor() + " pesos";
