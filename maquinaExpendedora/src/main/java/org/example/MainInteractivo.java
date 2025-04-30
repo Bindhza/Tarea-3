@@ -22,9 +22,9 @@ public class MainInteractivo {
         System.out.println("*******************************************");
         System.out.println("*   Bienvenido a la maquina expendedora   *");
         System.out.println("*******************************************");
-        System.out.println("");
+        System.out.println(" ");
         System.out.println("-------------------------------------------");
-        System.out.println("");
+        System.out.println(" ");
 
         int salida = 1;
         while(salida != 0){
@@ -33,8 +33,6 @@ public class MainInteractivo {
             entrada = scan.nextLine();
             System.out.println(entrada);
             entrada = entrada.toUpperCase();
-            System.out.println(entrada);
-            System.out.println();
             System.out.println();
 
             if(entrada.equals("NO")){salida = 0;}
@@ -47,7 +45,7 @@ public class MainInteractivo {
 
 
                 seleccion = 8;  //para que entre al while
-                while(seleccion != 1 || seleccion != 2 || seleccion != 3) {
+                while(seleccion != 1 && seleccion != 2 && seleccion != 3) {
                     seleccion = scan.nextInt();
                     System.out.println("");
                 }
@@ -84,16 +82,12 @@ public class MainInteractivo {
 
                 System.out.println();
 
-                seleccion = scan.nextInt();
-                System.out.println("");
-
 
                 seleccion = 14; // para que entre al while
-                while(seleccion  != 1 || seleccion  !=2 || seleccion  != 3 || seleccion  != 4 || seleccion  != 5) {
+                while(seleccion  != 1 && seleccion  !=2 && seleccion  != 3 && seleccion  != 4 && seleccion  != 5) {
                     seleccion = scan.nextInt();
                     System.out.println("");
                     switch (seleccion) {
-
                         case 1:
                             try {
                                 usuario = new Comprador(monedaPago, Expendedor.COCACOLA, maquina);
@@ -109,7 +103,9 @@ public class MainInteractivo {
                             }
                             System.out.println("Usted a comprado una " + usuario.queCompraste());
                             System.out.println("Su vuelto es de: $" + usuario.cuantoVuelto());
-
+                            System.out.println();
+                            seleccion = 9;
+                            break;
                         case 2:
                             try {
                                 usuario = new Comprador(monedaPago, Expendedor.SPRITE, maquina);
@@ -125,6 +121,9 @@ public class MainInteractivo {
                             }
                             System.out.println("Usted a comprado una " + usuario.queCompraste());
                             System.out.println("Su vuelto es de: $" + usuario.cuantoVuelto());
+                            System.out.println();
+                            seleccion = 9;
+                            break;
                         case 3:
                             try {
                                 usuario = new Comprador(monedaPago, Expendedor.FANTA, maquina);
@@ -140,6 +139,9 @@ public class MainInteractivo {
                             }
                             System.out.println("Usted a comprado una " + usuario.queCompraste());
                             System.out.println("Su vuelto es de: $" + usuario.cuantoVuelto());
+                            System.out.println();
+                            seleccion = 9;
+                            break;
                         case 4:
                             try {
                                 usuario = new Comprador(monedaPago, Expendedor.SNIKERS, maquina);
@@ -155,6 +157,9 @@ public class MainInteractivo {
                             }
                             System.out.println("Usted a comprado una " + usuario.queCompraste());
                             System.out.println("Su vuelto es de: $" + usuario.cuantoVuelto());
+                            System.out.println();
+                            seleccion = 9;
+                            break;
                         case 5:
                             try {
                                 usuario = new Comprador(monedaPago, Expendedor.SUPER8, maquina);
@@ -170,6 +175,9 @@ public class MainInteractivo {
                             }
                             System.out.println("Usted a comprado una " + usuario.queCompraste());
                             System.out.println("Su vuelto es de: $" + usuario.cuantoVuelto());
+                            System.out.println();
+                            seleccion = 9;
+                            break;
                         default:
                             System.out.println("Opcion invalida, seleccione nuevamente:");
 
@@ -180,6 +188,7 @@ public class MainInteractivo {
                             System.out.println("   4.  Sniker");
                             System.out.println("   5.  Super 8");
                             System.out.println();
+                            break;
 
 
                     }
