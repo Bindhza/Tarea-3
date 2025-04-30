@@ -33,7 +33,10 @@ public class Deposito<T> {
             return null;
         }
         else{
-            return deposito.removeFirst();
+            T tmp = deposito.get(0);
+            deposito.removeFirst();
+
+            return tmp;
 
         }
     }

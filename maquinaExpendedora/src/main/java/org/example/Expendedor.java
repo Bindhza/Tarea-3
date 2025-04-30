@@ -7,6 +7,12 @@ public class Expendedor {
     final private Deposito<Sprite> sprite;
     final private Deposito<Snickers> snicker;
     final private Deposito<Super8> super8;
+    final static int COCACOLA = 1;
+    final static int FANTA = 2;
+    final static int SPRITE = 3;
+    final static int SUPER8 = 4;
+    final static int SNIKERS = 5;
+
 
     public Expendedor(int n){
         cocacola = new Deposito<>();
@@ -45,7 +51,7 @@ public class Expendedor {
             monedas.addObjeto(moneda);
             throw new PagoInsuficienteException();
         }
-        int vuelto = (indice.precio - moneda.getValor())/100;
+        int vuelto = (moneda.getValor() - indice.precio)/100;
 
         for(int i = 0; i < vuelto; i++){
             monedas.addObjeto(new Moneda100());
