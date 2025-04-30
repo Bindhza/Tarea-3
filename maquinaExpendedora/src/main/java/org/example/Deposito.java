@@ -37,4 +37,7 @@ public class Deposito<T> {
             return tmp;
         }
     }
+    public boolean estaVacio(){
+        return deposito.isEmpty();
+    }
 }
