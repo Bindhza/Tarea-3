@@ -1,5 +1,9 @@
 package org.example;
 
+
+/**
+ * Clase abstracta que representa un dulce que se puede comer
+ */
 public abstract class Dulce extends Producto{
 
     public Dulce(int precio,String sabor){

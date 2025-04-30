@@ -1,5 +1,8 @@
 package org.example;
 
+/**
+ * Clase abstracta que representa un objeto que se puede beber
+ */
 public abstract class Bebida extends Producto{
     public Bebida (int precio, String sabor){
         super(precio,sabor);

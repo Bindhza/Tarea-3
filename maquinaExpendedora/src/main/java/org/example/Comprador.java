@@ -1,5 +1,8 @@
 package org.example;
 
+/**
+ * Representacion de una persona que compra un producto en un expendedor con una moneda de valor especifico
+ */
 public class Comprador {
     private final String sabor;
     private int vuelto;

@@ -1,5 +1,8 @@
 package org.example;
 
+/**
+ * Enumeracion que guarda el nombre y el sabor de todos los productos que distribuye una maquina expendedora
+ */
 public enum IndiceProductos {
     CocaCola (700,"cocacola"),
     Sprite   (700,"sprite"),

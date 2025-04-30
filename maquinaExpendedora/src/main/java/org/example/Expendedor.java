@@ -1,5 +1,10 @@
 package org.example;
 
+
+/**
+ * Representacion de un expendedor que guarda una cantidad finita de productos con precio especifico y
+ * acepta dinero a cambio de estos
+ */
 public class Expendedor {
     final private Deposito<Moneda> monedas;
     final private Deposito<CocaCola> cocacola;
@@ -13,7 +18,10 @@ public class Expendedor {
     final static int SUPER8 = 4;
     final static int SNIKERS = 5;
 
-
+    /**
+     * Instancia los depositos del expendedor y los llena con productos
+     * @param n la cantidad de producto con la que inicia cada deposito
+     */
     public Expendedor(int n){
         cocacola = new Deposito<>();
         fanta = new Deposito<>();
