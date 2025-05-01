@@ -16,7 +16,7 @@ public class Expendedor {
     final static int FANTA = 2;
     final static int SPRITE = 3;
     final static int SUPER8 = 4;
-    final static int SNIKERS = 5;
+    final static int SNICKERS = 5;
 
     /**
      * Instancia los depositos del expendedor y los llena con productos
@@ -76,7 +76,7 @@ public class Expendedor {
             monedas.addObjeto(moneda);
             throw new PagoInsuficienteException();
         }
-        int vuelto = (moneda.getValor() - indice.precio);
+        int vuelto = moneda.getValor() - indice.precio;
 
         for(int i = 0; i < vuelto; i += 100){
             monedas.addObjeto(new Moneda100());

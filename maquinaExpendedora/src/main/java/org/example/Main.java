@@ -49,7 +49,7 @@ public class Main {
 
         //Prueba de todos los producctos y sus metodos correspondientes
         try {
-            comprador = new Comprador(pago , Expendedor.SNIKERS, maquina);
+            comprador = new Comprador(pago , Expendedor.SNICKERS, maquina);
         } catch (PagoIncorrectoException e) {
             throw new RuntimeException(e);
         } catch (PagoInsuficienteException e) {

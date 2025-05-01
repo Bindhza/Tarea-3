@@ -8,6 +8,6 @@ public class Moneda1000 extends Moneda{
         super();
     }
     public int getValor(){
-        return (1000);
+        return 1000;
     }
 }
