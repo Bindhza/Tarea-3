@@ -5,194 +5,121 @@ public class MainInteractivo {
     public static void main(String[] args) {
 
         Scanner scan = new Scanner(System.in);
-        String entrada;
-        int seleccion;
-        Moneda monedaPago = null;
-        Comprador usuario;
-        Expendedor maquina;
+        Expendedor maquina = null;
+        maquina = crearExpendedor(scan);
 
-        System.out.println("Cuantos productos tendra su maquina expendedora?");
-        seleccion = scan.nextInt();
-        maquina = new Expendedor(seleccion);
-
-        System.out.println("");
-        System.out.println("");
-
-
-        System.out.println("*******************************************");
+        System.out.println("\n\n*******************************************");
         System.out.println("*   Bienvenido a la maquina expendedora   *");
         System.out.println("*******************************************");
         System.out.println(" ");
         System.out.println("-------------------------------------------");
         System.out.println(" ");
 
-        int salida = 1;
-        while(salida != 0){
+        boolean terminado = false;
+        while (!terminado) {
 
-            System.out.println("Desea comprar algun producto? (Si/No)");
-            entrada = scan.nextLine();
-            System.out.println(entrada);
-            entrada = entrada.toUpperCase();
-            System.out.println();
+            Moneda m = seleccionarMoneda(scan);
+            int codigoProducto = seleccionarProducto(scan);
 
-            if(entrada.equals("NO")){salida = 0;}
-            else if(entrada.equals("SI")){
-                System.out.println("Con que moneda desea pagar?(seleccione una opcion)");
-                System.out.println("   1.  100");
-                System.out.println("   2.  500");
-                System.out.println("   3.  1000");
-                System.out.println();
+            try {
+                Comprador cp = new Comprador(m,codigoProducto,maquina);
+                System.out.println("Usted ha comprado un/a " + cp.queCompraste());
+                System.out.println("Su vuelto es de $" + cp.cuantoVuelto());
 
-
-                seleccion = 8;  //para que entre al while
-                while(seleccion != 1 && seleccion != 2 && seleccion != 3) {
-                    seleccion = scan.nextInt();
-                    System.out.println("");
+            } catch (PagoIncorrectoException e) {
+                System.out.println("Error : La moneda entregada es invalida.");
+            } catch (PagoInsuficienteException e) {
+                System.out.println("Error: dinero insuficiente");
+            } catch (NoHayProductoException e) {
+                System.out.println("Lo sentimos, el producto comprado se encuentra fuera de stock");
+            } finally {
+                if (!confirmarEleccion(scan,"Operacion terminada. ¿Desea seguir comprando? (Si/No)")){
+                    terminado = true;
                 }
-                switch (seleccion) {
-                        case 1:
-                            monedaPago = new Moneda100();
-                            System.out.println();
-                            break;
-                        case 2:
-                            monedaPago = new Moneda500();
-                            break;
-                        case 3:
-                            monedaPago = new Moneda1000();
-                            break;
-                        default:
-                                System.out.println("Opcion invalida, seleccione nuevamente:");
+            }
 
-                                System.out.println();
-                                System.out.println("   1.  100");
-                                System.out.println("   2.  500");
-                                System.out.println("   3.  1000");
-                                System.out.println();
-                            break;
+
+        }
+
+        }
+
+
+
+    private static int seleccionarProducto(Scanner scan) {
+        int codigoProducto = -1;
+        System.out.println("Que producto desea comprar?");
+        System.out.println("   1.  Coca-Cola");
+        System.out.println("   2.  Sprite");
+        System.out.println("   3.  Fanta");
+        System.out.println("   4.  Sniker");
+        System.out.println("   5.  Super 8");
+        while(codigoProducto == -1){
+            codigoProducto = switch (scan.nextInt()) {
+                case 1 -> Expendedor.COCACOLA;
+                case 2 -> Expendedor.SPRITE;
+                case 3 -> Expendedor.FANTA;
+                case 4 -> Expendedor.SNIKERS;
+                case 5 -> Expendedor.SUPER8;
+                default -> {
+                    System.out.print("\nSeleccion incorrecta, intente nuevamente: ");
+                    yield -1;
                 }
 
+            };
+            scan.nextLine();
+        }
+        return codigoProducto;
+    }
 
-                System.out.println("");
-                System.out.println("Que producto desea comprar?");
-                System.out.println("   1.  Coca-Cola");
-                System.out.println("   2.  Sprite");
-                System.out.println("   3.  Fanta");
-                System.out.println("   4.  Sniker");
-                System.out.println("   5.  Super 8");
+    private static Moneda seleccionarMoneda(Scanner scan) {
+        Moneda m = null;
 
-                System.out.println();
+        System.out.println("Con que moneda desea pagar? (Seleccione solo una opcion)");
+        System.out.println("   1.  100");
+        System.out.println("   2.  500");
+        System.out.println("   3.  1000");
 
+        while (m == null) {
+            int seleccion = scan.nextInt();
+            scan.nextLine();
+            switch (seleccion) {
+                case 1 -> m = new Moneda100();
+                case 2 -> m = new Moneda500();
+                case 3 -> m = new Moneda1000();
+                default -> System.out.println("Opcion invalida, seleccione nuevamente:");
+            }
+        }
+        return m;
+    }
 
-                seleccion = 14; // para que entre al while
-                while(seleccion  != 1 && seleccion  !=2 && seleccion  != 3 && seleccion  != 4 && seleccion  != 5) {
-                    seleccion = scan.nextInt();
-                    System.out.println("");
-                    switch (seleccion) {
-                        case 1:
-                            try {
-                                usuario = new Comprador(monedaPago, Expendedor.COCACOLA, maquina);
-                            } catch (PagoIncorrectoException e) {
-                                System.out.println("OCURRIO UN ERROR AL MOMENTO DE REALIZAR SU PAGO");
-                                return;
-                            } catch (PagoInsuficienteException e) {
-                                System.out.println("EROR: Dinero insuficiente");
-                                break;
-                            } catch (NoHayProductoException e) {
-                                System.out.println("Error: No hay stock de su producto");
-                                break;
-                            }
-                            System.out.println("Usted a comprado una " + usuario.queCompraste());
-                            System.out.println("Su vuelto es de: $" + usuario.cuantoVuelto());
-                            System.out.println();
-                            seleccion = 9;
-                            break;
-                        case 2:
-                            try {
-                                usuario = new Comprador(monedaPago, Expendedor.SPRITE, maquina);
-                            } catch (PagoIncorrectoException e) {
-                                System.out.println("OCURRIO UN ERROR AL MOMENTO DE REALIZAR SU PAGO");
-                                return;
-                            } catch (PagoInsuficienteException e) {
-                                System.out.println("EROR: Dinero insuficiente");
-                                break;
-                            } catch (NoHayProductoException e) {
-                                System.out.println("Error: No hay stock de su producto");
-                                break;
-                            }
-                            System.out.println("Usted a comprado una " + usuario.queCompraste());
-                            System.out.println("Su vuelto es de: $" + usuario.cuantoVuelto());
-                            System.out.println();
-                            seleccion = 9;
-                            break;
-                        case 3:
-                            try {
-                                usuario = new Comprador(monedaPago, Expendedor.FANTA, maquina);
-                            } catch (PagoIncorrectoException e) {
-                                System.out.println("OCURRIO UN ERROR AL MOMENTO DE REALIZAR SU PAGO");
-                                return;
-                            } catch (PagoInsuficienteException e) {
-                                System.out.println("EROR: Dinero insuficiente");
-                                break;
-                            } catch (NoHayProductoException e) {
-                                System.out.println("Error: No hay stock de su producto");
-                                break;
-                            }
-                            System.out.println("Usted a comprado una " + usuario.queCompraste());
-                            System.out.println("Su vuelto es de: $" + usuario.cuantoVuelto());
-                            System.out.println();
-                            seleccion = 9;
-                            break;
-                        case 4:
-                            try {
-                                usuario = new Comprador(monedaPago, Expendedor.SNIKERS, maquina);
-                            } catch (PagoIncorrectoException e) {
-                                System.out.println("OCURRIO UN ERROR AL MOMENTO DE REALIZAR SU PAGO");
-                                return;
-                            } catch (PagoInsuficienteException e) {
-                                System.out.println("EROR: Dinero insuficiente");
-                                break;
-                            } catch (NoHayProductoException e) {
-                                System.out.println("Error: No hay stock de su producto");
-                                break;
-                            }
-                            System.out.println("Usted a comprado una " + usuario.queCompraste());
-                            System.out.println("Su vuelto es de: $" + usuario.cuantoVuelto());
-                            System.out.println();
-                            seleccion = 9;
-                            break;
-                        case 5:
-                            try {
-                                usuario = new Comprador(monedaPago, Expendedor.SUPER8, maquina);
-                            } catch (PagoIncorrectoException e) {
-                                System.out.println("OCURRIO UN ERROR AL MOMENTO DE REALIZAR SU PAGO");
-                                return;
-                            } catch (PagoInsuficienteException e) {
-                                System.out.println("EROR: Dinero insuficiente");
-                                break;
-                            } catch (NoHayProductoException e) {
-                                System.out.println("Error: No hay stock de su producto");
-                                break;
-                            }
-                            System.out.println("Usted a comprado una " + usuario.queCompraste());
-                            System.out.println("Su vuelto es de: $" + usuario.cuantoVuelto());
-                            System.out.println();
-                            seleccion = 9;
-                            break;
-                        default:
-                            System.out.println("Opcion invalida, seleccione nuevamente:");
+    private static Expendedor crearExpendedor(Scanner scan) {
+        Expendedor maquina = null;
+        while (maquina == null){
+            System.out.println("Cuantos productos tendra su maquina expendedora?");
+            int seleccion = scan.nextInt();
+            scan.nextLine();
+            if (seleccion > 0){
+                maquina = new Expendedor(seleccion);
+            } else {
+                System.out.println("Cantidad invalida, ingrese denuevo");
+            }
 
-                            System.out.println();
-                            System.out.println("   1.  Coca-Cola");
-                            System.out.println("   2.  Sprite");
-                            System.out.println("   3.  Fanta");
-                            System.out.println("   4.  Sniker");
-                            System.out.println("   5.  Super 8");
-                            System.out.println();
-                            break;
+        }
+        return maquina;
+    }
 
-
-                    }
+    private static boolean confirmarEleccion(Scanner scan, String mensaje) {
+        while (true) {
+            System.out.println(mensaje);
+            String entrada = scan.nextLine();
+            switch (entrada.toUpperCase()) {
+                case "SI" -> {
+                    return true;
                 }
+                case "NO" -> {
+                    return false;
+                }
+                default -> System.out.println("Seleccion invalida, intente denuevo");
             }
         }
     }

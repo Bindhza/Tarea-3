@@ -76,9 +76,9 @@ public class Expendedor {
             monedas.addObjeto(moneda);
             throw new PagoInsuficienteException();
         }
-        int vuelto = (moneda.getValor() - indice.precio)/100;
+        int vuelto = (moneda.getValor() - indice.precio);
 
-        for(int i = 0; i < vuelto; i++){
+        for(int i = 0; i < vuelto; i += 100){
             monedas.addObjeto(new Moneda100());
         }
 
