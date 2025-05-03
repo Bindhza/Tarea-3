@@ -14,7 +14,7 @@ public class MainInteractivo {
         System.out.println("-------------------------------------------");
         System.out.println(" ");
 
-        boolean terminado = false;
+        boolean terminado = !confirmarEleccion(scan,"¿Desea comprar un producto? (Si/No)");
         while (!terminado) {
 
             Moneda m = seleccionarMoneda(scan);
@@ -36,10 +36,11 @@ public class MainInteractivo {
             } finally {
                 if (!confirmarEleccion(scan,"Operacion terminada. ¿Desea seguir comprando? (Si/No)")){
                     terminado = true;
+                    System.out.println("¡Muchas gracias por su compra!");
                 }
             }
         }
-        System.out.println("¡Muchas gracias por su compra!");
+
         }
 
 
