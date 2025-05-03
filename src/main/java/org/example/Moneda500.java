@@ -1,0 +1,13 @@
+package org.example;
+
+/**
+ * Representacion de una moneda de 500 pesos
+ */
+public class Moneda500 extends Moneda {
+    public Moneda500(){
+        super();
+    }
+    public int getValor(){
+        return 500;
+    }
+}
