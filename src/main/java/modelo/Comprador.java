@@ -1,31 +1,18 @@
 package modelo;
 
+import java.util.ArrayList;
+
 /**
  * Representacion de una persona que compra un producto en un expendedor con una moneda de valor especifico
  */
 public class Comprador {
-    private final String sabor;
-    private int vuelto;
+    private final Deposito<Producto> productos;
+    private final ArrayList<Moneda> monedas;
 
-    /**
-     * Metodo donde se crea un comprador, y este compra el producto pedido, registrando su sabor y el vuelto que le queda
-     * @param m La moneda la cual el Comprador entrega al Expendedor
-     * @param cualProducto Codigo que representa el producto que va a comprar
-     * @param exp Expendedor al cual se le compra el producto
-     * @throws PagoIncorrectoException Si el comprador compra con una moneda nula
-     * @throws PagoInsuficienteException Si el comprador no tiene el dinero suficiente para comprar el producto pedido
-     * @throws NoHayProductoException Si el expendedor no tiene stock del producto pedido
-     */
-    public Comprador(Moneda m, int cualProducto, Expendedor exp) throws PagoIncorrectoException,PagoInsuficienteException,NoHayProductoException{
-        exp.comprarProducto(m,cualProducto);
-        Producto p = exp.getProducto();
-        sabor = p.sabor;
-        vuelto = 0;
-        Moneda tmp = exp.getVuelto();
-        while(tmp != null){
-            vuelto += tmp.getValor();
-            tmp = exp.getVuelto();
-        }
+
+    public Comprador(int monto) {
+        productos = new Deposito<>();
+        monedas = new ArrayList<>();
     }
 
     /**
@@ -33,14 +20,34 @@ public class Comprador {
      * @return un entero que representa el vuelto recibido
      */
     public int cuantoVuelto() {
-        return vuelto;
+        return monedas
+                .stream()
+                .map(Moneda::getValor)
+                .reduce(0, Integer::sum);
     }
 
+    public void comprar(){
+
+    }
+
+    public void darMoneda(Moneda m){
+        if(m == null){
+            throw new NullPointerException();
+        }
+        monedas.add(m);
+    }
+
+    public ArrayList<Moneda> obtenerMonedero(Moneda m){
+        return monedas;
+    }
+
+
+
     /**
-     * retorna el sabor del producto comprado
+     * Retorna el sabor del producto comprado
      * @return String que representa el sabor del producto
      */
     public String queCompraste(){
-        return sabor;
+        return "hi";
     }
 }

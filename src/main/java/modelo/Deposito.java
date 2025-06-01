@@ -36,6 +36,14 @@ public class Deposito<T> {
         }
     }
 
+    public void dumpDeposito(Deposito<T> deposito){
+        T obj = deposito.getObjeto();
+        while(obj != null) {
+            this.addObjeto(obj);
+            obj = deposito.getObjeto();
+        }
+    }
+
     /**
      * Verifica si el deposito esta vacio
      * @return true si esta vacio, false si no lo está
