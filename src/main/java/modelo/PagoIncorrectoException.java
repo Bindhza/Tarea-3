@@ -1,4 +1,4 @@
-package org.example;
+package modelo;
 
 /**
  * Excepcion lanzada cuando se paga con una moneda invalida

@@ -1,4 +1,4 @@
-package org.example;
+package modelo;
 
 /**
  * Clase abstracta que para generar objetos del tipo moneda

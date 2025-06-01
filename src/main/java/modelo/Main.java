@@ -4,7 +4,7 @@
  * @author Benjamin Poblete
  */
 
-package org.example;
+package modelo;
 
 import java.util.ArrayList;
 import java.util.Collections;

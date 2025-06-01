@@ -1,4 +1,4 @@
-package org.example;
+package modelo;
 
 /**
  * Clase abstracta que representa un objeto comestible que se puede comprar

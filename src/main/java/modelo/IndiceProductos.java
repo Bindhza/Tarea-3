@@ -1,4 +1,4 @@
-package org.example;
+package modelo;
 
 /**
  * Enumeracion que guarda el nombre y el sabor de todos los productos que distribuye una maquina expendedora

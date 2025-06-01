@@ -1,4 +1,4 @@
-package org.example;
+package modelo;
 
 /**
  * Clase que representa un Super 8

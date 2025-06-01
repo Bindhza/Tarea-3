@@ -1,4 +1,4 @@
-package org.example;
+package modelo;
 
 /**
  * Clase que representa una barra de Snickers

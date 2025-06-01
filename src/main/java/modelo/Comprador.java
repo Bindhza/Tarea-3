@@ -1,4 +1,4 @@
-package org.example;
+package modelo;
 
 /**
  * Representacion de una persona que compra un producto en un expendedor con una moneda de valor especifico
@@ -17,7 +17,8 @@ public class Comprador {
      * @throws NoHayProductoException Si el expendedor no tiene stock del producto pedido
      */
     public Comprador(Moneda m, int cualProducto, Expendedor exp) throws PagoIncorrectoException,PagoInsuficienteException,NoHayProductoException{
-        Producto p = exp.comprarProducto(m,cualProducto);
+        exp.comprarProducto(m,cualProducto);
+        Producto p = exp.getProducto();
         sabor = p.sabor;
         vuelto = 0;
         Moneda tmp = exp.getVuelto();

@@ -1,4 +1,4 @@
-package org.example;
+package modelo;
 
 /**
  * Representacion de una moneda de 1000 pesos

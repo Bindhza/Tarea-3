@@ -1,4 +1,4 @@
-package org.example;
+package modelo;
 import java.util.Scanner;
 
 public class MainInteractivo {

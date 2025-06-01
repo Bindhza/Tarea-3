@@ -1,4 +1,4 @@
-package org.example;
+package modelo;
 
 
 /**
@@ -6,12 +6,14 @@ package org.example;
  * acepta dinero a cambio de estos
  */
 public class Expendedor {
-    final private Deposito<Moneda> monedas;
+    final private Deposito<Moneda> monedasVuelto;
+    final private Deposito<Moneda> monedasGanadas;
     final private Deposito<CocaCola> cocacola;
     final private Deposito<Fanta> fanta;
     final private Deposito<Sprite> sprite;
     final private Deposito<Snickers> snicker;
     final private Deposito<Super8> super8;
+    private Producto productoComprado;
     final public static int COCACOLA = 1;
     final public static int FANTA = 2;
     final public static int SPRITE = 3;
@@ -23,12 +25,14 @@ public class Expendedor {
      * @param n la cantidad de producto con la que inicia cada deposito
      */
     public Expendedor(int n){
+        monedasGanadas = new Deposito<>();
         cocacola = new Deposito<>();
         fanta = new Deposito<>();
         sprite = new Deposito<>();
         super8 = new Deposito<>();
         snicker = new Deposito<>();
-        monedas = new Deposito<>();
+        monedasVuelto = new Deposito<>();
+        productoComprado = null;
         for (int i = 0; i < n; i++){
             cocacola.addObjeto(new CocaCola());
             fanta.addObjeto(new Fanta());
@@ -43,20 +47,26 @@ public class Expendedor {
      * @return una moneda del deposito de monedas, o null si no hay ninguna
      */
     public Moneda getVuelto(){
-        return monedas.getObjeto();
+        return monedasVuelto.getObjeto();
+    }
+
+    public Producto getProducto() throws NoHayProductoException {
+        if (productoComprado == null){
+            throw new NoHayProductoException();
+        }
+        return productoComprado;
     }
 
     /**
-     * metodo principal de Expendedor con el cual se compra un producto
+     * metodo principal de Expendedor con el cual se compra un producto, lo guarda en su deposito
      * @param moneda la moneda con la cual se compra el producto
      * @param codigo el codigo que identifica al producto
-     * @return el producto comprado
      * @throws NoHayProductoException en caso de que el codigo no lo maneje la maquina
      * o si el producto esta fuera de stock
      * @throws PagoIncorrectoException si se paga con una moneda invalida
      * @throws PagoInsuficienteException si el monto pagado no es suficiente
      */
-    public Producto comprarProducto(Moneda moneda, int codigo) throws NoHayProductoException, PagoIncorrectoException, PagoInsuficienteException {
+    public void comprarProducto(Moneda moneda, int codigo) throws NoHayProductoException, PagoIncorrectoException, PagoInsuficienteException {
         if (moneda == null) {
             throw new PagoIncorrectoException();
         }
@@ -68,18 +78,31 @@ public class Expendedor {
             case 4 -> IndiceProductos.Super8;
             case 5 -> IndiceProductos.Snickers;
             default -> {
-                monedas.addObjeto(moneda);
+                monedasVuelto.addObjeto(moneda);
                 throw new NoHayProductoException();
             }
         };
         if (indice.precio > moneda.getValor()){
-            monedas.addObjeto(moneda);
+            monedasVuelto.addObjeto(moneda);
             throw new PagoInsuficienteException();
         }
         int vuelto = moneda.getValor() - indice.precio;
+        monedasGanadas.addObjeto(moneda);
 
-        for(int i = 0; i < vuelto; i += 100){
-            monedas.addObjeto(new Moneda100());
+        int monedas1000 = vuelto / 1000;
+        vuelto %= 1000;
+        int monedas500 = vuelto / 500;
+        vuelto %= 500;
+        int monedas100 = vuelto / 100;
+
+        for(int i = 0; i < monedas1000; i++){
+            monedasVuelto.addObjeto(new Moneda1000());
+        }
+        for(int i = 0; i < monedas500; i++){
+            monedasVuelto.addObjeto(new Moneda500());
+        }
+        for(int i = 0; i < monedas100; i++){
+            monedasVuelto.addObjeto(new Moneda100());
         }
 
         Deposito<? extends Producto> productos = switch (indice) {
@@ -94,7 +117,7 @@ public class Expendedor {
             throw new NoHayProductoException();
         }
 
-        return productos.getObjeto();
+        productoComprado = productos.getObjeto();
     }
 
 }

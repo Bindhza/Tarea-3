@@ -1,4 +1,4 @@
-package org.example;
+package modelo;
 
 /**
  * Excepcion lanzada cuando no se encuentra el producto, tanto si el producto
