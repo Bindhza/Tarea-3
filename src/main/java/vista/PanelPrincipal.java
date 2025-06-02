@@ -12,13 +12,13 @@ public class PanelPrincipal extends JPanel {//se ve en el centro de la ventana
 
         panelExpendedor = new PanelExpendedor();
         panelComprador = new PanelComprador();
-        PanelBoton panelBoton = new PanelBoton();
 
-        panelExpendedor.setPreferredSize(new Dimension(214,360));
-        panelComprador.setPreferredSize(new Dimension(426,360));
-        this.add(panelComprador);
+
+        panelExpendedor.setPreferredSize(new Dimension(214*2,360*2));
+        panelComprador.setPreferredSize(new Dimension(426*2,360*2));
         this.add(panelExpendedor);
-        this.add(panelBoton);
+        this.add(panelComprador);
+
     }
 
 }

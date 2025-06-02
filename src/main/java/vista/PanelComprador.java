@@ -13,8 +13,8 @@ public class PanelComprador extends JPanel{
         panelMonedas = new PanelMonedas();
         panelProductos = new PanelProductos();
 
-        panelMonedas.setPreferredSize(new Dimension(213,360));
-        panelProductos.setPreferredSize(new Dimension(213,360));
+        panelMonedas.setPreferredSize(new Dimension(getWidth()/2,360*2));
+        panelProductos.setPreferredSize(new Dimension(getWidth()/2,360*2));
 
         add(panelMonedas);
         add(panelProductos);
