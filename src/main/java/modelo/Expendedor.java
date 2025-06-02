@@ -35,7 +35,7 @@ public class Expendedor {
         for (int i = 0; i < n; i++){
             cocacola.addObjeto(new CocaCola());
             fanta.addObjeto(new Fanta());
-            sprite.addObjeto(new Sprite());
+            sprite.addObjeto(ProductoFactory);
             super8.addObjeto(new Super8());
             snicker.addObjeto(new Snickers());
         }
@@ -130,30 +130,31 @@ public class Expendedor {
     }
 
     public void rellenarDeposito(int codigo, int n) {
+        ProductoFactory generador = ProductoFactory.generador;
         switch (codigo) {
             case 1 -> {
                 for (int i = 0; i < n; i++){
-                    cocacola.addObjeto(new CocaCola());
+                    cocacola.addObjeto(generador.generarCocaCola());
                 }
             }
             case 2 -> {
                 for(int i = 0; i < n; i++){
-                    fanta.addObjeto(new Fanta());
+                    fanta.addObjeto(generador.generarFanta());
                 }
             }
             case 3 -> {
                 for(int i = 0; i < n; i++){
-                    sprite.addObjeto(new Sprite());
+                    sprite.addObjeto(generador.generarSprite());
                 }
             }
             case 4 -> {
                 for(int i = 0; i < n; i++){
-                    super8.addObjeto(new Super8());
+                    super8.addObjeto(generador.generarSuper8());
                 }
             }
             case 5 -> {
                 for(int i = 0; i < n; i++){
-                    snicker.addObjeto(new Snickers());
+                    snicker.addObjeto(generador.generarSnickers());
                 }
             }
             default -> {

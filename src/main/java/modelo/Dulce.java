@@ -6,8 +6,8 @@ package modelo;
  */
 public abstract class Dulce extends Producto{
 
-    public Dulce(int precio,String sabor){
-        super(precio,sabor);
+    public Dulce(int precio,String sabor, int serie){
+        super(precio,sabor,serie);
     }
 
     /**

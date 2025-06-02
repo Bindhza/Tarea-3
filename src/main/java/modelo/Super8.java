@@ -5,8 +5,8 @@ package modelo;
  */
 public class Super8 extends Dulce{
 
-    public Super8(){
-        super(IndiceProductos.Super8.precio, IndiceProductos.Super8.nombre);
+    public Super8(int serie){
+        super(IndiceProductos.Super8.precio, IndiceProductos.Super8.nombre, serie);
     }
 }
 
