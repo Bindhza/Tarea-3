@@ -6,7 +6,7 @@ package modelo;
  * acepta dinero a cambio de estos
  */
 public class Expendedor {
-    final private Deposito<Moneda> saldoDeposito;
+    final private Deposito<Moneda> monedasSaldo;
     final private Deposito<Moneda> monedasVuelto;
     final private Deposito<Moneda> monedasGanadas;
     final private Deposito<CocaCola> cocacola;
@@ -18,12 +18,12 @@ public class Expendedor {
     private int saldo;
 
     /**
-     * Instancia los depositos del expendedor y los llena con productos
-     * @param n la cantidad de producto con la que inicia cada deposito
+     * Instancia los depósitos del expendedor y los llena con productos
+     * @param n la cantidad de producto con la que inicia cada depósito
      */
     public Expendedor(int n){
         saldo = 0;
-        saldoDeposito = new Deposito<>();
+        monedasSaldo = new Deposito<>();
         monedasGanadas = new Deposito<>();
         cocacola = new Deposito<>();
         fanta = new Deposito<>();
@@ -41,12 +41,17 @@ public class Expendedor {
         }
     }
 
-    public void ingresarMoneda(Moneda m){
+    public void insertarMoneda(Moneda m){
         if(m == null){
             throw new NullPointerException();
         }
-        saldoDeposito.addObjeto(m);
+        monedasSaldo.addObjeto(m);
         saldo += m.getValor();
+    }
+
+    public void soltarSaldo(){
+        saldo = 0;
+        monedasVuelto.dumpDeposito(monedasSaldo);
     }
 
     /**
@@ -68,31 +73,29 @@ public class Expendedor {
      * metodo principal de Expendedor con el cual se compra un producto, lo guarda en su deposito
      * @param codigo el codigo que identifica al producto
      * @throws NoHayProductoException en caso de que el codigo no lo maneje la maquina
-     * o si el producto esta fuera de stock
-     * @throws PagoIncorrectoException si se paga con una moneda invalida
+     * o si el producto está fuera de stock
      * @throws PagoInsuficienteException si el monto pagado no es suficiente
      */
-    public void comprarProducto(int codigo) throws NoHayProductoException, PagoIncorrectoException, PagoInsuficienteException {
+    public void comprarProducto(int codigo) throws NoHayProductoException, PagoInsuficienteException {
 
         IndiceProductos indice = switch (codigo) {
-            case 1 -> IndiceProductos.CocaCola;
-            case 2 -> IndiceProductos.Fanta;
-            case 3 -> IndiceProductos.Sprite;
-            case 4 -> IndiceProductos.Super8;
-            case 5 -> IndiceProductos.Snickers;
+            case 1  -> IndiceProductos.CocaCola;
+            case 2  -> IndiceProductos.Fanta;
+            case 3  -> IndiceProductos.Sprite;
+            case 4  -> IndiceProductos.Super8;
+            case 5  -> IndiceProductos.Snickers;
             default -> {
-                saldo = 0;
-                monedasVuelto.dumpDeposito(saldoDeposito);
+                soltarSaldo();
                 throw new NoHayProductoException();
             }
         };
         if (indice.precio > saldo){
-            saldo = 0;
-            monedasVuelto.dumpDeposito(saldoDeposito);
+            soltarSaldo();
             throw new PagoInsuficienteException();
         }
         int vuelto = saldo - indice.precio;
-        monedasGanadas.dumpDeposito(saldoDeposito);
+        saldo = 0;
+        monedasGanadas.dumpDeposito(monedasSaldo);
 
 
         int monedas1000 = vuelto / 1000;
@@ -124,6 +127,39 @@ public class Expendedor {
         }
 
         productoComprado = productos.getObjeto();
+    }
+
+    public void rellenarDeposito(int codigo, int n) {
+        switch (codigo) {
+            case 1 -> {
+                for (int i = 0; i < n; i++){
+                    cocacola.addObjeto(new CocaCola());
+                }
+            }
+            case 2 -> {
+                for(int i = 0; i < n; i++){
+                    fanta.addObjeto(new Fanta());
+                }
+            }
+            case 3 -> {
+                for(int i = 0; i < n; i++){
+                    sprite.addObjeto(new Sprite());
+                }
+            }
+            case 4 -> {
+                for(int i = 0; i < n; i++){
+                    super8.addObjeto(new Super8());
+                }
+            }
+            case 5 -> {
+                for(int i = 0; i < n; i++){
+                    snicker.addObjeto(new Snickers());
+                }
+            }
+            default -> {
+                return;
+            }
+        };
     }
 
 }
