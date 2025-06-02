@@ -7,8 +7,8 @@ public class Moneda100 extends Moneda{
     /**
      * Llama al constructor de Moneda(esta vacio)
      */
-    public Moneda100(){
-        super();
+    public Moneda100(int serie){
+        super(serie);
     }
 
     /**

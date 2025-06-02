@@ -32,12 +32,13 @@ public class Expendedor {
         snicker = new Deposito<>();
         monedasVuelto = new Deposito<>();
         productoComprado = null;
+        ProductoFactory generador = ProductoFactory.obtenerGen();
         for (int i = 0; i < n; i++){
-            cocacola.addObjeto(new CocaCola());
-            fanta.addObjeto(new Fanta());
-            sprite.addObjeto(ProductoFactory);
-            super8.addObjeto(new Super8());
-            snicker.addObjeto(new Snickers());
+            cocacola.addObjeto(generador.generarCocaCola());
+            fanta.addObjeto(generador.generarFanta());
+            sprite.addObjeto(generador.generarSprite());
+            super8.addObjeto(generador.generarSuper8());
+            snicker.addObjeto(generador.generarSnickers());
         }
     }
 
@@ -97,7 +98,7 @@ public class Expendedor {
         saldo = 0;
         monedasGanadas.dumpDeposito(monedasSaldo);
 
-
+        MonedaFactory generador = MonedaFactory.obtenerGen();
         int monedas1000 = vuelto / 1000;
         vuelto %= 1000;
         int monedas500 = vuelto / 500;
@@ -105,13 +106,13 @@ public class Expendedor {
         int monedas100 = vuelto / 100;
 
         for(int i = 0; i < monedas1000; i++){
-            monedasVuelto.addObjeto(new Moneda1000());
+            monedasVuelto.addObjeto(generador.generarMoneda1000());
         }
         for(int i = 0; i < monedas500; i++){
-            monedasVuelto.addObjeto(new Moneda500());
+            monedasVuelto.addObjeto(generador.generarMoneda500());
         }
         for(int i = 0; i < monedas100; i++){
-            monedasVuelto.addObjeto(new Moneda100());
+            monedasVuelto.addObjeto(generador.generarMoneda100());
         }
 
         Deposito<? extends Producto> productos = switch (indice) {
@@ -129,8 +130,9 @@ public class Expendedor {
         productoComprado = productos.getObjeto();
     }
 
+    //no me gusta
     public void rellenarDeposito(int codigo, int n) {
-        ProductoFactory generador = ProductoFactory.generador;
+        ProductoFactory generador = ProductoFactory.obtenerGen();
         switch (codigo) {
             case 1 -> {
                 for (int i = 0; i < n; i++){

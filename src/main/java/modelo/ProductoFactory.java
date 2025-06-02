@@ -1,27 +1,40 @@
 package modelo;
 
 public class ProductoFactory {
-    static ProductoFactory generador = new ProductoFactory();
-    private int serie = 0;
-    private ProductoFactory(){}
+    private static ProductoFactory generador;
+    private int serie;
+    private ProductoFactory(int serie){
+        this.serie = serie;
+    }
+
+    public static ProductoFactory obtenerGen(){
+        if (generador == null){
+            generador = new ProductoFactory(0);
+        }
+        return generador;
+    }
+
+    private void incrementar(){
+        serie++;
+    }
 
     CocaCola generarCocaCola(){
-        serie += 1;
+        incrementar();
         return new CocaCola(serie);
     }
 
     Fanta generarFanta(){
-        serie += 1;
+        incrementar();
         return new Fanta(serie);
     }
 
     Sprite generarSprite(){
-        serie += 1;
+        incrementar();
         return new Sprite(serie);
     }
 
     Super8 generarSuper8(){
-        serie += 1;
+        incrementar();
         return new Super8(serie);
     }
 

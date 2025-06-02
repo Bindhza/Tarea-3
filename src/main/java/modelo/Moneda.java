@@ -5,15 +5,18 @@ package modelo;
  */
 public abstract class Moneda implements Comparable<Moneda> {
 
-    public Moneda(){
+    int serie;
+
+    public Moneda(int serie){
+        this.serie = serie;
     }
 
     /**
      * metodo que retorna a la moneda
-     * @return direccion de la instancia
+     * @return serie
      */
-    public Moneda getSerie(){
-        return this;
+    public int getSerie(){
+        return serie;
     }
 
     /**
@@ -28,7 +31,7 @@ public abstract class Moneda implements Comparable<Moneda> {
      */
     @Override
     public String toString() {
-        return hashCode() + ": " + getValor() + " pesos";
+        return getSerie() + ": " + getValor() + " pesos";
     }
 
     /**
