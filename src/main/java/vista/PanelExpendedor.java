@@ -7,7 +7,9 @@ import java.net.URL;
 public class PanelExpendedor extends JPanel {
     private JPanel panelBotones = new JPanel();
     private ImageIcon imagen;
-    private URL url;
+    private URL url, url2;
+    private ImageIcon imagenOriginal, imagenFinal;
+    private Image imagenEscalable;
     public PanelExpendedor(){
         panelBotones.setLayout(new GridLayout(8,2));
         this.setLayout(new BorderLayout());
@@ -22,6 +24,7 @@ public class PanelExpendedor extends JPanel {
         PanelBoton boton5 = new PanelBoton("/button5_panel.png","/buttonpressed5_panel.png");
         logosLabel super8 = new logosLabel("/super8_logo.png", 30);
         this.add(panelBotones,BorderLayout.EAST);
+
         panelBotones.add(boton1);
         panelBotones.add(coca);
         panelBotones.add(boton2);
@@ -36,6 +39,7 @@ public class PanelExpendedor extends JPanel {
         panelBotones.setOpaque(false);
 
 
+
     }
     @Override
     public void paintComponent(Graphics g) {
@@ -43,6 +47,14 @@ public class PanelExpendedor extends JPanel {
         Graphics2D g2 = (Graphics2D) g;
         g2.setColor(new Color(62,62,62));
         g2.fillRect(0, 0, getWidth(), getHeight());
+
+        url2 = getClass().getResource("/vitrina_expendedor.png");
+        imagenOriginal = new ImageIcon(url2);
+        imagenEscalable = imagenOriginal.getImage().getScaledInstance(265, 480, Image.SCALE_SMOOTH);
+        //se pueden cambiar las dimensiones de la imagen agusto
+
+        imagenFinal = new ImageIcon(imagenEscalable);
+        g2.drawImage(imagenFinal.getImage(), 20, 20, this);
 
     }
 }
