@@ -4,11 +4,11 @@ import javax.swing.*;
 import java.awt.*;
 import java.net.URL;
 
-public class logosLabel extends JLabel {
+public class LogosLabel extends JLabel {
     private Image imagenEscalable;
     private ImageIcon imagenOriginal, imagenFinal;
     private URL url;
-    public logosLabel(String strImagen, int escalable){
+    public LogosLabel(String strImagen, int escalable){
         url = getClass().getResource(strImagen);
         imagenOriginal = new ImageIcon(url);
         float proporcion = escalable/100.0f;

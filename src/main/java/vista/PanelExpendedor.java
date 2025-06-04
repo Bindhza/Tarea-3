@@ -1,5 +1,7 @@
 package vista;
 
+import modelo.Moneda1000;
+
 import javax.swing.*;
 import java.awt.*;
 import java.net.URL;
@@ -14,15 +16,16 @@ public class PanelExpendedor extends JPanel {
         panelBotones.setLayout(new GridLayout(8,2));
         this.setLayout(new BorderLayout());
         PanelBoton boton1 = new PanelBoton("/button1_panel.png","/buttonpressed1_panel.png");
-        logosLabel coca = new logosLabel("/coca_logo.png", 3);
+        LogosLabel coca = new LogosLabel("/coca_logo.png", 3);
         PanelBoton boton2 = new PanelBoton("/button2_panel.png","/buttonpressed2_panel.png");
-        logosLabel sprite = new logosLabel("/sprite_logo.png", 3);
+        LogosLabel sprite = new LogosLabel("/sprite_logo.png", 3);
         PanelBoton boton3 = new PanelBoton("/button3_panel.png","/buttonpressed3_panel.png");
-        logosLabel fanta = new logosLabel("/fanta_logo.png", 10);
+        LogosLabel fanta = new LogosLabel("/fanta_logo.png", 10);
         PanelBoton boton4 = new PanelBoton("/button4_panel.png","/buttonpressed4_panel.png");
-        logosLabel snikers = new logosLabel("/snickers_logo.png", 3);
+        LogosLabel snikers = new LogosLabel("/snickers_logo.png", 3);
         PanelBoton boton5 = new PanelBoton("/button5_panel.png","/buttonpressed5_panel.png");
-        logosLabel super8 = new logosLabel("/super8_logo.png", 30);
+        LogosLabel super8 = new LogosLabel("/super8_logo.png", 30);
+
         this.add(panelBotones,BorderLayout.EAST);
 
         panelBotones.add(boton1);
@@ -35,6 +38,7 @@ public class PanelExpendedor extends JPanel {
         panelBotones.add(snikers);
         panelBotones.add(boton5);
         panelBotones.add(super8);
+
 
         panelBotones.setOpaque(false);
 
