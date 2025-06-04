@@ -55,6 +55,10 @@ public class Expendedor {
         monedasVuelto.dumpDeposito(monedasSaldo);
     }
 
+    public int getSaldo(){
+        return saldo;
+    }
+
     /**
      * accede al deposito de monedas y entrega una moneda de este
      * @return una moneda del deposito de monedas, o null si no hay ninguna
@@ -63,11 +67,20 @@ public class Expendedor {
         return monedasVuelto.getObjeto();
     }
 
+    public IndiceProductos verProducto() throws NoHayProductoException {
+        if (productoComprado == null){
+            throw new NoHayProductoException();
+        }
+        return productoComprado.indice;
+    }
+
     public Producto getProducto() throws NoHayProductoException {
         if (productoComprado == null){
             throw new NoHayProductoException();
         }
-        return productoComprado;
+        Producto aux = productoComprado;
+        productoComprado = null;
+        return aux;
     }
 
     /**
@@ -81,8 +94,8 @@ public class Expendedor {
 
         IndiceProductos indice = switch (codigo) {
             case 1  -> IndiceProductos.CocaCola;
-            case 2  -> IndiceProductos.Fanta;
-            case 3  -> IndiceProductos.Sprite;
+            case 2  -> IndiceProductos.Sprite;
+            case 3  -> IndiceProductos.Fanta;
             case 4  -> IndiceProductos.Super8;
             case 5  -> IndiceProductos.Snickers;
             default -> {

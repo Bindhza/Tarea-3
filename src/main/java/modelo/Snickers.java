@@ -5,6 +5,6 @@ package modelo;
  */
 public class Snickers extends Dulce{
      public Snickers(int serie){
-        super(IndiceProductos.Snickers.precio,IndiceProductos.Snickers.nombre, serie);
+        super(serie, IndiceProductos.Snickers);
      }
 }

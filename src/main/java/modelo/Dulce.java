@@ -6,8 +6,8 @@ package modelo;
  */
 public abstract class Dulce extends Producto{
 
-    public Dulce(int precio,String sabor, int serie){
-        super(precio,sabor,serie);
+    public Dulce(int serie, IndiceProductos indice){
+        super(serie, indice);
     }
 
     /**
@@ -15,6 +15,6 @@ public abstract class Dulce extends Producto{
      * @return sabor del dulce
      */
     public String comer(){
-        return sabor;
+        return indice.nombre;
     }
 }

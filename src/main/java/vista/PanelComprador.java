@@ -1,12 +1,15 @@
 package vista;
 
+import modelo.Comprador;
+import modelo.Expendedor;
+
 import javax.swing.*;
 import java.awt.*;
 
 public class PanelComprador extends JPanel{
     PanelMonedas panelMonedas;
     PanelProductos panelProductos;
-    public PanelComprador(){
+    public PanelComprador(Expendedor exp, Comprador comp){
         this.setLayout(new BoxLayout(this,BoxLayout.X_AXIS));
         this.setBackground(Color.BLUE);
 

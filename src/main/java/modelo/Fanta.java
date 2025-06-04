@@ -5,6 +5,6 @@ package modelo;
  */
 public class Fanta extends Bebida{
     public Fanta(int serie){
-        super(IndiceProductos.Fanta.precio,IndiceProductos.Fanta.nombre,serie);
+        super(serie,IndiceProductos.Fanta);
     }
 }

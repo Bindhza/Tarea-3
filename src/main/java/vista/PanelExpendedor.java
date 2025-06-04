@@ -1,6 +1,6 @@
 package vista;
 
-import modelo.IndiceProductos;
+import modelo.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -8,14 +8,50 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Collections;
 
 public class PanelExpendedor extends JPanel implements ActionListener {
     private JPanel panelBotones;
     private JLabel titulo,saldo;
-    ArrayList<JButton> botonesCompra;
-    public PanelExpendedor(){
+    private JButton producto;
+    private Image imagenExpendedor;
+    private boolean compraErronea;
+    private final ArrayList<JButton> botonesCompra, botonesVitrina;
+    private final Expendedor expendedor;
+    private final Comprador comprador;
+    public PanelExpendedor(Expendedor exp, Comprador comp) {
         this.setLayout(new BorderLayout());
+
+        URL url = getClass().getResource("/vitrina_expendedor.png");
+        ImageIcon imagen = new ImageIcon(url);
+        imagenExpendedor = imagen.getImage();
+
+        compraErronea = false;
+        expendedor = exp;
+        comprador = comp;
+
+        JPanel bottomPanel = new JPanel();
+        bottomPanel.setPreferredSize(new Dimension(0,95));
+        bottomPanel.setLayout(null);
+        bottomPanel.setOpaque(false);
+        add(bottomPanel, BorderLayout.SOUTH);
+
+        JPanel panelCentral = new JPanel();
+        panelCentral.setLayout(null);
+        panelCentral.setOpaque(false);
+        panelCentral.setPreferredSize(new Dimension(imagenExpendedor.getWidth(this),imagenExpendedor.getHeight(this)));
+        add(panelCentral, BorderLayout.CENTER);
+
+        producto = new JButton();
+        producto.setContentAreaFilled(false);
+        producto.setBorderPainted(false);
+        producto.setFocusPainted(false);
+        producto.setOpaque(false);
+        producto.setBounds(112,0,95,95);
+        producto.addActionListener(this);
+        bottomPanel.add(producto);
+
+        botonesVitrina = crearBotonesVitrina(panelCentral);
+        crearTitulo();
 
         panelBotones = new JPanel();
         panelBotones.setOpaque(false);
@@ -24,15 +60,40 @@ public class PanelExpendedor extends JPanel implements ActionListener {
 
         crearSaldo();
         botonesCompra = crearBotones();
-        crearTitulo();
+        repaint();
+    }
+
+    private ArrayList<JButton> crearBotonesVitrina(JPanel panel) {
+        IndiceProductos[] productos = IndiceProductos.values();
+        ArrayList<JButton> botones = new ArrayList<>();
+        for(int i = 0; i < 5; i++){
+            JButton b = new JButton();
+            b.setOpaque(false);
+            b.setContentAreaFilled(false);
+            b.setBorderPainted(false);
+            b.setFocusPainted(false);
+
+            String producto = "/" + productos[i].nombre + "_producto.png";
+            b.setIcon(new ImageIcon(getClass().getResource(producto)));
+            if(i < 3){
+                b.setBounds(23+82*i,75,95,95);
+            } else {
+                b.setBounds(69+82*(i-3),255,95,95);
+            }
+            b.setName(""+i);
+            b.addActionListener(this);
+            panel.add(b);
+            botones.add(b);
+        }
+        return botones;
     }
 
     private ArrayList<JButton> crearBotones() {
         ArrayList<JButton> botones = new ArrayList<>();
-        for(int i = 0; i < 5; i++){
+        for(int i = 1; i <= 5; i++){
             JButton boton = new JButton();
-            URL direccionBoton = getClass().getResource("/button"+(i+1)+"_panel.png");
-            URL direccionBotonPresionado = getClass().getResource("/buttonpressed"+(i+1)+"_panel.png");
+            URL direccionBoton = getClass().getResource("/button"+i+"_panel.png");
+            URL direccionBotonPresionado = getClass().getResource("/buttonpressed"+i+"_panel.png");
             ImageIcon imagenBoton = new ImageIcon(direccionBoton);
             ImageIcon imagenBotonPresionado= new ImageIcon(direccionBotonPresionado);
 
@@ -47,7 +108,7 @@ public class PanelExpendedor extends JPanel implements ActionListener {
             panelBotones.add(boton);
             botones.add(boton);
 
-            String producto = IndiceProductos.values()[i].nombre;
+            String producto = IndiceProductos.values()[i-1].nombre;
             ImageIcon iconoProducto = new ImageIcon(getClass().getResource("/"+producto+"_logo.png"));
             JLabel label = new JLabel(iconoProducto);
             panelBotones.add(label);
@@ -57,7 +118,7 @@ public class PanelExpendedor extends JPanel implements ActionListener {
 
     private void crearSaldo() {
         saldo = new JLabel();
-        saldo.setText("$0");
+        saldo.setText("$");
         saldo.setHorizontalAlignment(SwingConstants.CENTER);
         saldo.setVerticalAlignment(SwingConstants.CENTER);
         saldo.setForeground(Color.white);
@@ -69,6 +130,7 @@ public class PanelExpendedor extends JPanel implements ActionListener {
 
     private void crearTitulo() {
         titulo = new JLabel();
+        titulo.setPreferredSize(new Dimension(1292,720/8));
         titulo.setText("Maquina Expendedora");
         titulo.setHorizontalAlignment(SwingConstants.CENTER);
         titulo.setVerticalAlignment(SwingConstants.CENTER);
@@ -80,13 +142,17 @@ public class PanelExpendedor extends JPanel implements ActionListener {
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        titulo.setPreferredSize(new Dimension(this.getWidth(), this.getHeight()/8));
+        if(!compraErronea){
+            saldo.setText("$"+expendedor.getSaldo());
+        } else {
+            compraErronea = false;
+        }
         Graphics2D g2 = (Graphics2D) g;
         g2.setColor(new Color(62,62,62));
         g2.fillRect(0, 0, getWidth(), getHeight());
-        URL url = getClass().getResource("/vitrina_expendedor.png");
-        ImageIcon imagen = new ImageIcon(url);
-        g2.drawImage(imagen.getImage(), 20, 100, imagen.getIconWidth(), imagen.getIconHeight(), this);
+        g2.setColor(Color.black);
+        g2.fillRoundRect(76,600,166,87,10,10);
+        g2.drawImage(imagenExpendedor, 20, 100, imagenExpendedor.getWidth(this), imagenExpendedor.getHeight(this), this);
     }
 
     @Override
@@ -94,7 +160,41 @@ public class PanelExpendedor extends JPanel implements ActionListener {
         if(!(e.getSource() instanceof JButton)){return;}
         if(botonesCompra.contains((JButton) e.getSource())){
             int codigo = ((JButton) e.getSource()).getName().charAt(0) - '0';
-            System.out.println(codigo);
+            try {
+                expendedor.comprarProducto(codigo);
+                ImageIcon imagenProducto = switch(expendedor.verProducto()){
+                    case CocaCola -> new ImageIcon(getClass().getResource("/cocacola_producto.png"));
+                    case Sprite -> new ImageIcon(getClass().getResource("/sprite_producto.png"));
+                    case Fanta -> new ImageIcon(getClass().getResource("/fanta_producto.png"));
+                    case Super8 -> new ImageIcon(getClass().getResource("/super8_producto.png"));
+                    case Snickers -> new ImageIcon(getClass().getResource("/snickers_producto.png"));
+                };
+                producto.setIcon(imagenProducto);
+            } catch (NoHayProductoException ex) {
+                System.out.println("no hay producto");
+                saldo.setText("ERROR");
+                compraErronea = true;
+            } catch (PagoInsuficienteException ex) {
+                System.out.println("no hay plata");
+                saldo.setText("ERROR");
+                compraErronea = true;
+            }
+            return;
         }
+        if(e.getSource() == producto){
+            try {
+                comprador.retirarProducto(expendedor);
+                producto.setIcon(null);
+            } catch (NoHayProductoException ex) {
+                System.out.println("no hay producto");
+            }
+            return;
+        }
+        if(botonesVitrina.contains((JButton) e.getSource())){
+            int codigo = ((JButton) e.getSource()).getName().charAt(0) - '0' + 1;
+            expendedor.rellenarDeposito(codigo,5);
+            System.out.println("Se relleno el deposito numero " + codigo);
+        }
+
     }
 }

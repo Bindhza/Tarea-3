@@ -1,5 +1,8 @@
 package vista;
 
+import modelo.Comprador;
+import modelo.Expendedor;
+
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
@@ -8,12 +11,11 @@ public class PanelPrincipal extends JPanel {//se ve en el centro de la ventana
     private PanelComprador panelComprador;
     private PanelExpendedor panelExpendedor;
 
-    public PanelPrincipal() {
+    public PanelPrincipal(Expendedor exp, Comprador comp) {
         setLayout(new BoxLayout(this,BoxLayout.X_AXIS));
 
-
-        panelExpendedor = new PanelExpendedor();
-        panelComprador = new PanelComprador();
+        panelExpendedor = new PanelExpendedor(exp, comp);
+        panelComprador = new PanelComprador(exp, comp);
 
 
         panelExpendedor.setPreferredSize(new Dimension(428,720));

@@ -4,8 +4,8 @@ package modelo;
  * Clase abstracta que representa un objeto que se puede beber
  */
 public abstract class Bebida extends Producto{
-    public Bebida (int precio, String sabor, int serie){
-        super(precio,sabor,serie);
+    public Bebida (int serie, IndiceProductos indice){
+        super(serie,indice);
     }
 
     /**
@@ -14,6 +14,6 @@ public abstract class Bebida extends Producto{
      */
 
     public String beber(){
-        return sabor;
+        return indice.nombre;
     }
 }

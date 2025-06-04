@@ -8,7 +8,6 @@ import java.util.Collections;
  */
 public class Comprador {
     private int saldo;
-    private Expendedor expendedor;
     private final Deposito<Producto> productos;
     private final ArrayList<Moneda> monedas;
 
@@ -37,6 +36,14 @@ public class Comprador {
 
     public ArrayList<Moneda> obtenerMonedero(Moneda m){
         return monedas;
+    }
+
+    public void retirarProducto(Expendedor exp) throws NoHayProductoException {
+        Producto p = exp.getProducto();
+        if(p == null){
+            throw new NoHayProductoException();
+        }
+        productos.addObjeto(p);
     }
 
 
