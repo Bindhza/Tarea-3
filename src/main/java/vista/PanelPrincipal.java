@@ -16,8 +16,8 @@ public class PanelPrincipal extends JPanel {//se ve en el centro de la ventana
         panelComprador = new PanelComprador();
 
 
-        panelExpendedor.setPreferredSize(new Dimension(214*2,360*2));
-        panelComprador.setPreferredSize(new Dimension(426*2,360*2));
+        panelExpendedor.setPreferredSize(new Dimension(428,720));
+        panelComprador.setPreferredSize(new Dimension(852,720));
         this.add(panelExpendedor);
         this.add(panelComprador);
 
