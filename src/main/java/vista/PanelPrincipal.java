@@ -2,6 +2,7 @@ package vista;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
 
 public class PanelPrincipal extends JPanel {//se ve en el centro de la ventana
     private PanelComprador panelComprador;
@@ -9,6 +10,7 @@ public class PanelPrincipal extends JPanel {//se ve en el centro de la ventana
 
     public PanelPrincipal() {
         setLayout(new BoxLayout(this,BoxLayout.X_AXIS));
+
 
         panelExpendedor = new PanelExpendedor();
         panelComprador = new PanelComprador();

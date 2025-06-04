@@ -10,9 +10,9 @@ public enum IndiceProductos {
     Super8   (4,300,"super8"),
     Snickers (5,500,"snickers");
 
-    final int codigo;
-    final int precio;
-    final String nombre;
+    public final int codigo;
+    public final int precio;
+    public final String nombre;
     IndiceProductos(int codigo, int precio, String nombre) {
         this.codigo = codigo;
         this.precio = precio;
