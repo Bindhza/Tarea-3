@@ -10,19 +10,22 @@ public class PanelComprador extends JPanel{
     PanelMonedas panelMonedas;
     PanelProductos panelProductos;
     public PanelComprador(Expendedor exp, Comprador comp){
-        this.setLayout(new BoxLayout(this,BoxLayout.X_AXIS));
-        this.setBackground(Color.BLUE);
+        this.setLayout(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
 
-        panelMonedas = new PanelMonedas();
+        panelMonedas = new PanelMonedas(comp);
+        panelMonedas.setBackground(new Color(166, 166, 166));
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.weightx = 1;
+        gbc.weighty = 1;
+        gbc.fill = GridBagConstraints.BOTH;
+        add(panelMonedas, gbc);
+
         panelProductos = new PanelProductos();
-
-        panelMonedas.setPreferredSize(new Dimension(getWidth()/2,360*2));
-        panelProductos.setPreferredSize(new Dimension(getWidth()/2,360*2));
-
-        add(panelMonedas);
-        add(panelProductos);
-
-
+        panelProductos.setBackground(new Color(217, 217, 217));
+        gbc.gridx = 1;
+        add(panelProductos, gbc);
     }
 
 

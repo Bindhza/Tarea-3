@@ -1,19 +1,17 @@
 package vista;
 
-import modelo.*;
+import modelo.Comprador;
+import modelo.Expendedor;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class PanelMonedas extends JPanel {
-
-    public PanelMonedas(){
-        this.setLayout(new GridLayout(1,0));
-        MonedasBoton moneda = new MonedasBoton100(new Moneda100(1232));
-        this.add(moneda);
-        this.add(new MonedasBoton100(new Moneda100(65782)));
+    Expendedor exp;
+    Comprador comprador;
+    public PanelMonedas(Comprador comp) {
+        comprador = comp;
     }
-
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
