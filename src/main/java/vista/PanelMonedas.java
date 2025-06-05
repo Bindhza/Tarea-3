@@ -16,9 +16,11 @@ public class PanelMonedas extends JPanel implements ActionListener {
     private final Comprador comp;
     private final Expendedor exp;
     private ArrayList<Moneda> cacheMonedas;
-    public PanelMonedas(Expendedor exp, Comprador comp){
+    private ActionListener padre;
+    public PanelMonedas(Expendedor exp, Comprador comp, ActionListener padre){
         this.comp = comp;
         this.exp = exp;
+        this.padre = padre;
         this.setLayout(new GridLayout(4,1));
 
         cacheMonedas = new ArrayList<>(comp.obtenerMonedero());
@@ -48,6 +50,7 @@ public class PanelMonedas extends JPanel implements ActionListener {
         ArrayList<Moneda> monedas = comp.obtenerMonedero();
         for(Moneda m : monedas){
             MonedasBoton monedaVista = new MonedasBoton(m);
+            monedaVista.setName("monedaPanel");
             monedaVista.setPreferredSize(new Dimension(60,60));
             monedaVista.addActionListener(this);
             agregarMonedaAPanel(monedaVista);
@@ -87,6 +90,7 @@ public class PanelMonedas extends JPanel implements ActionListener {
             repaint();
             return;
         }
+        System.out.println("moneda nueva");
         ArrayList<Moneda> monedasNuevas = comp
                 .obtenerMonedero()
                 .stream()
@@ -94,8 +98,12 @@ public class PanelMonedas extends JPanel implements ActionListener {
                 .collect(Collectors.toCollection(ArrayList::new));
         for(Moneda m : monedasNuevas){
             MonedasBoton monedaVista = new MonedasBoton(m);
+            monedaVista.setPreferredSize(new Dimension(60,60));
+            monedaVista.addActionListener(this);
+            monedaVista.setName("monedaPanel");
             agregarMonedaAPanel(monedaVista);
         }
+        cacheMonedas = new ArrayList<>(comp.obtenerMonedero());
         revalidate();
         repaint();
     }
@@ -124,16 +132,22 @@ public class PanelMonedas extends JPanel implements ActionListener {
         Graphics2D g2 = (Graphics2D) g;
     }
 
-
+    //no me gusta tampoco, pero que se le va a hacer
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() instanceof MonedasBoton){
             Moneda m = ((MonedasBoton) e.getSource()).getMoneda();
+            if(((MonedasBoton) e.getSource()).getName().equals("vuelto")){
+                comp.darMoneda(((MonedasBoton) e.getSource()).getMoneda());
+                actualizarPaneles();
+                System.out.println(comp.obtenerMonedero());
+                return;
+            }
+            System.out.println("no es vuelto");
             comp.quitarMoneda(m);
             exp.insertarMoneda(m);
             actualizarPaneles();
-            System.out.println(monedas500);
-            System.out.println("Moneda actualizada");
+            padre.actionPerformed(e);
         }
     }
 }

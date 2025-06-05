@@ -168,4 +168,12 @@ public class Expendedor {
         }
     }
 
+    public int[] obtenerStock(){
+        return new int[] {cocacola.getSize(), fanta.getSize(), sprite.getSize(), super8.getSize(), snicker.getSize()};
+    }
+
+    public boolean[] depositosVacios(){
+        return new boolean[] {cocacola.estaVacio(), fanta.estaVacio(), sprite.estaVacio(), super8.estaVacio(), snicker.estaVacio()};
+    }
+
 }

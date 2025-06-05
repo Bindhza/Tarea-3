@@ -10,7 +10,8 @@ import java.net.URL;
 import java.util.ArrayList;
 
 public class PanelExpendedor extends JPanel implements ActionListener {
-    private JPanel panelBotones;
+    private JPanel panelBotones, panelVuelto;
+    private MonedasBoton botonVuelto;
     private JLabel titulo,saldo;
     private JButton producto;
     private Image imagenExpendedor;
@@ -18,9 +19,10 @@ public class PanelExpendedor extends JPanel implements ActionListener {
     private final ArrayList<JButton> botonesCompra, botonesVitrina;
     private final Expendedor expendedor;
     private final Comprador comprador;
-    public PanelExpendedor(Expendedor exp, Comprador comp) {
+    private ActionListener padre;
+    public PanelExpendedor(Expendedor exp, Comprador comp, ActionListener padre) {
         this.setLayout(new BorderLayout());
-
+        this.padre = padre;
         URL url = getClass().getResource("/vitrina_expendedor.png");
         ImageIcon imagen = new ImageIcon(url);
         imagenExpendedor = imagen.getImage();
@@ -50,14 +52,19 @@ public class PanelExpendedor extends JPanel implements ActionListener {
         producto.addActionListener(this);
         bottomPanel.add(producto);
 
+        panelVuelto = new JPanel();
+        panelVuelto.setLayout(new GridLayout(1,1));
+        panelVuelto.setBounds(310,0,95,95);
+        bottomPanel.add(panelVuelto);
+
         botonesVitrina = crearBotonesVitrina(panelCentral);
+        for(int i = 0; i < 5; i++){actualizarLeyendaVitrina(i);}
         crearTitulo();
 
         panelBotones = new JPanel();
         panelBotones.setOpaque(false);
         panelBotones.setLayout(new GridLayout(8,2));
         add(panelBotones,BorderLayout.EAST);
-
         crearSaldo();
         botonesCompra = crearBotones();
         repaint();
@@ -78,7 +85,7 @@ public class PanelExpendedor extends JPanel implements ActionListener {
             if(i < 3){
                 b.setBounds(23+82*i,75,95,95);
             } else {
-                b.setBounds(69+82*(i-3),255,95,95);
+                b.setBounds(59+94*(i-3),255,95,95);
             }
             b.setName(""+i);
             b.addActionListener(this);
@@ -86,6 +93,10 @@ public class PanelExpendedor extends JPanel implements ActionListener {
             botones.add(b);
         }
         return botones;
+    }
+
+    private void actualizarLeyendaVitrina(int codigo){
+        botonesVitrina.get(codigo).setToolTipText("<html> Stock = " + expendedor.obtenerStock()[codigo]+ "<br>Precio = $"+ IndiceProductos.values()[codigo].precio+"</html>");
     }
 
     private ArrayList<JButton> crearBotones() {
@@ -128,6 +139,29 @@ public class PanelExpendedor extends JPanel implements ActionListener {
         panelBotones.add(new JLabel(""));
     }
 
+    private Moneda crearNuevoVuelto(){
+        Moneda monedaVieja;
+        if(botonVuelto == null){
+            monedaVieja = null;
+        } else {
+            monedaVieja = botonVuelto.getMoneda();
+            panelVuelto.removeAll();
+        }
+        Moneda m = expendedor.getVuelto();
+        if (m == null){
+            botonVuelto = null;
+            return monedaVieja;
+        }
+        MonedasBoton boton = new MonedasBoton(m);
+        boton.setPreferredSize(new Dimension(60,60));
+        boton.setToolTipText("Obtener el vuelto");
+        boton.setName("vuelto");
+        boton.addActionListener(this);
+        boton.addActionListener(padre);
+        panelVuelto.add(boton);
+        botonVuelto = boton;
+        return monedaVieja;
+    }
     private void crearTitulo() {
         titulo = new JLabel();
         titulo.setPreferredSize(new Dimension(1292,720/8));
@@ -147,6 +181,13 @@ public class PanelExpendedor extends JPanel implements ActionListener {
         } else {
             compraErronea = false;
         }
+        boolean[] depositosVacios = expendedor.depositosVacios();
+        for(int i = 0; i < 5; i++){
+            if(depositosVacios[i]){
+                botonesVitrina.get(i).setIcon(new ImageIcon(getClass().getResource("/sin_stock.png")));
+                botonesVitrina.get(i).setToolTipText("SIN STOCK");
+            }
+        }
         Graphics2D g2 = (Graphics2D) g;
         g2.setColor(Color.black);
         g2.fillRoundRect(76,600,166,87,10,10);
@@ -156,6 +197,13 @@ public class PanelExpendedor extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if(!(e.getSource() instanceof JButton)){return;}
+        if(e.getSource() == botonVuelto){
+            crearNuevoVuelto();
+            revalidate();
+            repaint();
+            System.out.println("hee");
+            return;
+        }
         if(botonesCompra.contains((JButton) e.getSource())){
             int codigo = ((JButton) e.getSource()).getName().charAt(0) - '0';
             try {
@@ -168,14 +216,26 @@ public class PanelExpendedor extends JPanel implements ActionListener {
                     case Snickers -> new ImageIcon(getClass().getResource("/snickers_producto.png"));
                 };
                 producto.setIcon(imagenProducto);
+                actualizarLeyendaVitrina(codigo-1);
+                if (botonVuelto != null){
+                    return;
+                }
+                crearNuevoVuelto();
+
             } catch (NoHayProductoException ex) {
                 System.out.println("no hay producto");
                 saldo.setText("ERROR");
                 compraErronea = true;
+                if(botonVuelto == null){
+                    crearNuevoVuelto();
+                }
             } catch (PagoInsuficienteException ex) {
                 System.out.println("no hay plata");
                 saldo.setText("ERROR");
                 compraErronea = true;
+                if(botonVuelto == null){
+                    crearNuevoVuelto();
+                }
             }
             return;
         }
@@ -189,10 +249,16 @@ public class PanelExpendedor extends JPanel implements ActionListener {
             return;
         }
         if(botonesVitrina.contains((JButton) e.getSource())){
-            int codigo = ((JButton) e.getSource()).getName().charAt(0) - '0' + 1;
+            JButton boton = (JButton) e.getSource();
+            int codigo = boton.getName().charAt(0) - '0' + 1;
             expendedor.rellenarDeposito(codigo,5);
+            actualizarLeyendaVitrina(codigo-1);
+            boton.setIcon(new ImageIcon(getClass()
+                    .getResource("/"
+                            +IndiceProductos.values()[codigo-1].nombre
+                            +"_producto.png")));
             System.out.println("Se relleno el deposito numero " + codigo);
         }
-
+        if(((JButton) e.getSource()).getName().equals("monedaPanel")){repaint();}
     }
 }
