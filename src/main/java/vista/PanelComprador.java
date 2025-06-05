@@ -9,11 +9,11 @@ import java.awt.*;
 public class PanelComprador extends JPanel{
     PanelMonedas panelMonedas;
     PanelProductos panelProductos;
-    public PanelComprador(Expendedor exp, Comprador comp){
+    public PanelComprador(Expendedor exp, Comprador comp, PanelExpendedor lasMonedas){
         this.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
 
-        panelMonedas = new PanelMonedas(comp);
+        panelMonedas = new PanelMonedas(exp, lasMonedas);
         panelMonedas.setBackground(new Color(166, 166, 166));
         gbc.gridx = 0;
         gbc.gridy = 0;

@@ -12,9 +12,9 @@ public class MonedasBoton500 extends MonedasBoton{
     private URL url;
     private ImageIcon imagen;
 
-    public MonedasBoton500(int serie) {
+    public MonedasBoton500(int serie, Expendedor comp, JPanel panel, PanelExpendedor exp) {
 
-        super(new Moneda500(serie));
+        super(new Moneda500(serie), comp, panel, exp);
         url = getClass().getResource("/moneda500.png");
         imagen = new ImageIcon(url);
 
@@ -28,7 +28,7 @@ public class MonedasBoton500 extends MonedasBoton{
         super.paintComponent(g);
 
         g2.setColor(Color.BLACK); // Color del texto
-        g2.setFont(new Font("Arial", Font.PLAIN, 13)); // Fuente del texto
+        g2.setFont(new Font("Arial", Font.ITALIC, 14)); // Fuente del texto
 
         String texto = moneda.getSerie() + ""; // Texto a mostrar
         FontMetrics medidaTexto = g2.getFontMetrics();

@@ -1,5 +1,7 @@
 package vista;
 
+import modelo.Comprador;
+import modelo.Expendedor;
 import modelo.Moneda;
 import modelo.Moneda1000;
 
@@ -12,8 +14,8 @@ public class MonedasBoton1000 extends MonedasBoton{
     private URL url;
     private ImageIcon imagen;
 
-    public MonedasBoton1000(int serie) {
-        super(new Moneda1000(serie));
+    public MonedasBoton1000(int serie, Expendedor comp, JPanel panel, PanelExpendedor exp) {
+        super(new Moneda1000(serie), comp, panel, exp);
         url = getClass().getResource("/moneda1000.png");
         imagen = new ImageIcon(url);
 
@@ -27,7 +29,7 @@ public class MonedasBoton1000 extends MonedasBoton{
         super.paintComponent(g);
 
         g2.setColor(Color.BLACK); // Color del texto
-        g2.setFont(new Font("Arial", Font.PLAIN, 13)); // Fuente del texto
+        g2.setFont(new Font("Arial", Font.ITALIC, 14)); // Fuente del texto
 
         String texto = moneda.getSerie() + ""; // Texto a mostrar
         FontMetrics medidaTexto = g2.getFontMetrics();
