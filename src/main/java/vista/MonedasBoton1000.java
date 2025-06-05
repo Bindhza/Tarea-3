@@ -1,6 +1,7 @@
 package vista;
 
 import modelo.Moneda;
+import modelo.Moneda1000;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,8 +12,8 @@ public class MonedasBoton1000 extends MonedasBoton{
     private URL url;
     private ImageIcon imagen;
 
-    public MonedasBoton1000(Moneda monedaEntrada) {
-        super(monedaEntrada);
+    public MonedasBoton1000(int serie) {
+        super(new Moneda1000(serie));
         url = getClass().getResource("/moneda1000.png");
         imagen = new ImageIcon(url);
 
@@ -33,7 +34,7 @@ public class MonedasBoton1000 extends MonedasBoton{
 
         // Calcular posición para centrar el texto
         int x = (getWidth() - medidaTexto.stringWidth(texto)) / 2;
-        int y = (((getHeight() - medidaTexto.getHeight()) / 2) + medidaTexto.getAscent())+20;//cambiar el numero para bajar o subir
+        int y = (((getHeight() - medidaTexto.getHeight()) / 2) + medidaTexto.getAscent())+10;//cambiar el numero para bajar o subir
 
         g2.drawString(texto, x, y);
     }

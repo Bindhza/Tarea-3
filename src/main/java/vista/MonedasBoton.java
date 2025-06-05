@@ -12,7 +12,6 @@ public abstract class MonedasBoton extends JButton {
         this.setContentAreaFilled(false);
         this.setFocusPainted(false);
     }
-    //no se como hacer para que se compare el valor de la Moneda entrada con el Boton
 
 
     public int getSerie(){

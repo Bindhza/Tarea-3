@@ -4,6 +4,7 @@ import modelo.Moneda;
 
 import javax.swing.*;
 import java.awt.*;
+import modelo.*;
 import java.net.URL;
 
 public class MonedasBoton500 extends MonedasBoton{
@@ -11,8 +12,9 @@ public class MonedasBoton500 extends MonedasBoton{
     private URL url;
     private ImageIcon imagen;
 
-    public MonedasBoton500(Moneda monedaEntrada) {
-        super(monedaEntrada);
+    public MonedasBoton500(int serie) {
+
+        super(new Moneda500(serie));
         url = getClass().getResource("/moneda500.png");
         imagen = new ImageIcon(url);
 
@@ -33,7 +35,7 @@ public class MonedasBoton500 extends MonedasBoton{
 
         // Calcular posición para centrar el texto
         int x = (getWidth() - medidaTexto.stringWidth(texto)) / 2;
-        int y = (((getHeight() - medidaTexto.getHeight()) / 2) + medidaTexto.getAscent())+20;//cambiar el numero para bajar o subir
+        int y = (((getHeight() - medidaTexto.getHeight()) / 2) + medidaTexto.getAscent())+10;//cambiar el numero para bajar o subir
 
         g2.drawString(texto, x, y);
     }

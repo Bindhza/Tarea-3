@@ -1,11 +1,11 @@
 package vista;
 
 import modelo.Moneda;
+import modelo.Moneda100;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+
 import java.net.URL;
 
 public class MonedasBoton100 extends MonedasBoton{
@@ -13,8 +13,9 @@ public class MonedasBoton100 extends MonedasBoton{
     private URL url;
     private ImageIcon imagen;
 
-    public MonedasBoton100(Moneda monedaEntrada) {
-        super(monedaEntrada);
+    public MonedasBoton100(int serie) {
+
+        super(new Moneda100(serie));
         url = getClass().getResource("/moneda100.png");
         imagen = new ImageIcon(url);
         this.setPreferredSize(new Dimension(100,100));
@@ -35,7 +36,7 @@ public class MonedasBoton100 extends MonedasBoton{
 
         // Calcular posición para centrar el texto
         int x = (getWidth() - medidaTexto.stringWidth(texto)) / 2;
-        int y = (((getHeight() - medidaTexto.getHeight()) / 2) + medidaTexto.getAscent())+20;//cambiar el numero para bajar o subir
+        int y = (((getHeight() - medidaTexto.getHeight()) / 2) + medidaTexto.getAscent())+10;//cambiar el numero para bajar o subir
 
         g2.drawString(texto, x, y);
     }
