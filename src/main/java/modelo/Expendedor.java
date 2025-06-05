@@ -92,17 +92,10 @@ public class Expendedor {
      */
     public void comprarProducto(int codigo) throws NoHayProductoException, PagoInsuficienteException {
 
-        IndiceProductos indice = switch (codigo) {
-            case 1  -> IndiceProductos.CocaCola;
-            case 2  -> IndiceProductos.Sprite;
-            case 3  -> IndiceProductos.Fanta;
-            case 4  -> IndiceProductos.Super8;
-            case 5  -> IndiceProductos.Snickers;
-            default -> {
-                soltarSaldo();
-                throw new NoHayProductoException();
-            }
-        };
+        if (codigo <= 0 || codigo > 5){
+            throw new NoHayProductoException();
+        }
+        IndiceProductos indice = IndiceProductos.values()[codigo - 1];
         if (indice.precio > saldo){
             soltarSaldo();
             throw new PagoInsuficienteException();
@@ -172,10 +165,7 @@ public class Expendedor {
                     snicker.addObjeto(generador.generarSnickers());
                 }
             }
-            default -> {
-                return;
-            }
-        };
+        }
     }
 
 }
