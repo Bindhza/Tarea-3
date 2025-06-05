@@ -30,6 +30,7 @@ public class PanelExpendedor extends JPanel implements ActionListener {
         comprador = comp;
 
         JPanel bottomPanel = new JPanel();
+        bottomPanel.setPreferredSize(new Dimension(0,95));
         bottomPanel.setLayout(null);
         bottomPanel.setOpaque(false);
         add(bottomPanel, BorderLayout.SOUTH);
@@ -75,9 +76,9 @@ public class PanelExpendedor extends JPanel implements ActionListener {
             String producto = "/" + productos[i].nombre + "_producto.png";
             b.setIcon(new ImageIcon(getClass().getResource(producto)));
             if(i < 3){
-                b.setBounds(23+82*i,75+20,95,95);
+                b.setBounds(23+82*i,75,95,95);
             } else {
-                b.setBounds(69+82*(i-3),255+20,95,95);
+                b.setBounds(69+82*(i-3),255,95,95);
             }
             b.setName(""+i);
             b.addActionListener(this);
@@ -122,12 +123,14 @@ public class PanelExpendedor extends JPanel implements ActionListener {
         saldo.setVerticalAlignment(SwingConstants.CENTER);
         saldo.setForeground(Color.white);
         saldo.setFont(saldo.getFont().deriveFont(22.1F));
+        saldo.setPreferredSize(new Dimension(40,20));
         panelBotones.add(saldo);
         panelBotones.add(new JLabel(""));
     }
 
     private void crearTitulo() {
         titulo = new JLabel();
+        titulo.setPreferredSize(new Dimension(1292,720/8));
         titulo.setText("Maquina Expendedora");
         titulo.setHorizontalAlignment(SwingConstants.CENTER);
         titulo.setVerticalAlignment(SwingConstants.CENTER);
@@ -177,14 +180,8 @@ public class PanelExpendedor extends JPanel implements ActionListener {
             return;
         }
         if(e.getSource() == producto){
-            if (producto.getIcon() == null){
-                System.out.println("hehehe");
-                return;
-            }
             try {
-                IndiceProductos productoIndice = expendedor.verProducto();
                 comprador.retirarProducto(expendedor);
-                System.out.println("Se retiró " + productoIndice.nombre + " del expendedor");
                 producto.setIcon(null);
             } catch (NoHayProductoException ex) {
                 System.out.println("no hay producto");

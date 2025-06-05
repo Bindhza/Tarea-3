@@ -34,7 +34,10 @@ public class Comprador {
         Collections.sort(monedas);
     }
 
-    public ArrayList<Moneda> obtenerMonedero(Moneda m){
+    public void quitarMoneda(Moneda m){
+        monedas.remove(m);
+    }
+    public ArrayList<Moneda> obtenerMonedero(){
         return monedas;
     }
 

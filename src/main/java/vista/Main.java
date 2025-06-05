@@ -9,7 +9,11 @@ public class Main {
     public static void main(String[] args) {
         Expendedor exp = new Expendedor(7);
         Comprador comp = new Comprador(950);
-        exp.insertarMoneda(new Moneda1000(12983));
+        MonedaFactory generador = MonedaFactory.obtenerGen();
+        comp.darMoneda(generador.generarMoneda100());
+        comp.darMoneda(generador.generarMoneda100());
+        comp.darMoneda(generador.generarMoneda100());
+        exp.insertarMoneda(generador.generarMoneda1000());
         PanelPrincipal panelPrincipal = new PanelPrincipal(exp,comp);
         panelPrincipal.setVisible(true);
         JFrame f = new JFrame();

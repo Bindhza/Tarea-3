@@ -21,8 +21,4 @@ public class PanelProductos extends JPanel {
         titulo.setAlignmentY(Component.CENTER_ALIGNMENT);
         add(titulo);
     }
-    @Override
-    public void paintComponent(Graphics g){
-        super.paintComponent(g);
-    }
 }

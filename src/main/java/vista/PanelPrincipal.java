@@ -5,7 +5,6 @@ import modelo.Expendedor;
 
 import javax.swing.*;
 import java.awt.*;
-import java.io.IOException;
 
 public class PanelPrincipal extends JPanel {//se ve en el centro de la ventana
     private PanelComprador panelComprador;
@@ -23,7 +22,6 @@ public class PanelPrincipal extends JPanel {//se ve en el centro de la ventana
         panelComprador.setPreferredSize(new Dimension(852,720));
         this.add(panelExpendedor);
         this.add(panelComprador);
-
     }
 
 }

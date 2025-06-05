@@ -14,15 +14,15 @@ public class MonedaFactory {
         }
         return generador;
     }
-    Moneda100 generarMoneda100(){
+    public Moneda100 generarMoneda100(){
         serie++;
         return new Moneda100(serie);
     }
-    Moneda500 generarMoneda500(){
+    public Moneda500 generarMoneda500(){
         serie++;
         return new Moneda500(serie);
     }
-    Moneda1000 generarMoneda1000(){
+    public Moneda1000 generarMoneda1000(){
         serie++;
         return new Moneda1000(serie);
     }
