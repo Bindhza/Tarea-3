@@ -67,8 +67,4 @@ public class PanelProductos extends JPanel {
             super8.add(prod);
         }
     }
-    @Override
-    public void paintComponent(Graphics g){
-        super.paintComponent(g);
-    }
 }

@@ -23,6 +23,10 @@ public class Deposito<T> {
         deposito.add(objeto);
     }
 
+
+    public int getSize(){
+        return deposito.size();
+    }
     /**
      * Saca un objeto del deposito en en caso de que exista, si no retorna null
      * @return producto seleccionado o null si no lo encuentra
@@ -34,6 +38,11 @@ public class Deposito<T> {
         else{
             return deposito.removeFirst();
         }
+    }
+
+    public T peekObjeto(){
+        if (deposito.isEmpty()) {return null;}
+        return deposito.getFirst();
     }
 
     public void dumpDeposito(Deposito<T> deposito){

@@ -15,6 +15,22 @@ public class Comprador {
     public Comprador(int monto) {
         productos = new Deposito<>();
         monedas = new ArrayList<>();
+        MonedaFactory generador = MonedaFactory.obtenerGen();
+        int monedas1000 = monto / 1000;
+        monto %= 1000;
+        int monedas500 = monto / 500;
+        monto %= 500;
+        int monedas100 = monto / 100;
+
+        for(int i = 0; i < monedas1000; i++){
+            monedas.add(generador.generarMoneda1000());
+        }
+        for(int i = 0; i < monedas500; i++){
+            monedas.add(generador.generarMoneda500());
+        }
+        for(int i = 0; i < monedas100; i++){
+            monedas.add(generador.generarMoneda100());
+        }
     }
 
     /**
@@ -34,7 +50,10 @@ public class Comprador {
         Collections.sort(monedas);
     }
 
-    public ArrayList<Moneda> obtenerMonedero(Moneda m){
+    public void quitarMoneda(Moneda m){
+        monedas.remove(m);
+    }
+    public ArrayList<Moneda> obtenerMonedero(){
         return monedas;
     }
 
