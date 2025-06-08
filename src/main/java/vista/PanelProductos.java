@@ -44,25 +44,26 @@ public class PanelProductos extends JPanel {
         titulo.setAlignmentX(Component.CENTER_ALIGNMENT);
         titulo.setAlignmentY(Component.CENTER_ALIGNMENT);
         add(titulo);
-
+        setProducto(new CocaBoton(15));
+        setProducto(new CocaBoton(12));
 
     }
 
-    public void setPorducto(ProductosBoton prod){ //falta crear los botones
+    public void setProducto(ProductosBoton prod){ //falta crear los botones
 
-        if(prod.getProducto instanceof CocaCola){
+        if(prod.getProducto() instanceof CocaCola){
             coca.add(prod);
         }
-        else if (prod.getProducto instanceof Sprite){
+        else if (prod.getProducto() instanceof Sprite){
             sprite.add(prod);
         }
-        else if (prod.getProducto instanceof Fanta){
+        else if (prod.getProducto() instanceof Fanta){
             fanta.add(prod);
         }
-        else if (prod.getProducto instanceof Snickers){
+        else if (prod.getProducto() instanceof Snickers){
             snicker.add(prod);
         }
-        else if (prod.getProducto instanceof Super8){
+        else if (prod.getProducto() instanceof Super8){
             super8.add(prod);
         }
     }

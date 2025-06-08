@@ -1,27 +1,28 @@
 package vista;
 
 import modelo.CocaCola;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.net.URL;
 
-public class CocaBoton extends ProductosBoton {
+public class Super8Boton extends ProductosBoton {
 
     private URL url;
     private ImageIcon imagen;
 
-    public CocaBoton(int serie){
+    public Super8Boton(int serie, JPanel panel){
         super(new CocaCola(serie));
 
-        url = getClass().getResource("/cocacola_producto.png");
+        url = getClass().getResource("/snickers_producto.png");
         imagen = new ImageIcon(url);
 
         this.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(null,"MMMM Usted se tomo una Coca-Cola", "Expendedor", JOptionPane.PLAIN_MESSAGE);
+                JOptionPane.showMessageDialog(null,"MMMM Usted se comio un Super 8", "Expendedor", JOptionPane.PLAIN_MESSAGE);
                 JButton boton = (JButton) e.getSource();
                 Component panel = boton.getParent();
                 ((JPanel)panel).remove(boton);
@@ -29,8 +30,6 @@ public class CocaBoton extends ProductosBoton {
                 ((JPanel) panel).repaint();
             }
         });
-
-        this.setSize(100,100);
     }
 
     @Override
