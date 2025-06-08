@@ -65,18 +65,8 @@ public class PanelMonedas extends JPanel implements ActionListener {
                     .filter(m -> !comp.obtenerMonedero().contains(m))
                     .collect(Collectors.toCollection(ArrayList::new));
             for(Moneda m: monedasFaltantes){
-                ArrayList<MonedasBoton> botones = switch (m.getValor()){
-                    case 100 -> monedas100;
-                    case 500 -> monedas500;
-                    case 1000 -> monedas1000;
-                    default -> throw new IllegalStateException("????");
-                };
-                JPanel panel = switch (m.getValor()){
-                    case 100 -> m100;
-                    case 500 -> m500;
-                    case 1000 -> m1000;
-                    default -> throw new IllegalStateException("????");
-                };
+                ArrayList<MonedasBoton> botones = obtenerListaBotones(m.getValor());
+                JPanel panel = obtenerPanel(m.getValor());
                 MonedasBoton b = botones
                         .stream()
                         .filter(boton -> boton.getMoneda().getSerie() == m.getSerie())
@@ -108,28 +98,29 @@ public class PanelMonedas extends JPanel implements ActionListener {
         repaint();
     }
 
-    private void agregarMonedaAPanel(MonedasBoton monedaVista) {
-        switch (monedaVista.getMoneda().getValor()){
-            case 100 -> {
-                monedas100.add(monedaVista);
-                m100.add(monedaVista);
-            }
-            case 500 -> {
-                monedas500.add(monedaVista);
-                m500.add(monedaVista);
-            }
-            case 1000 -> {
-                monedas1000.add(monedaVista);
-                m1000.add(monedaVista);
-            }
-        }
+
+    private ArrayList<MonedasBoton> obtenerListaBotones(int valor) {
+        return switch (valor) {
+            case 100 -> monedas100;
+            case 500 -> monedas500;
+            case 1000 -> monedas1000;
+            default -> throw new IllegalStateException("Valor de moneda no soportado: " + valor);
+        };
     }
 
+    private JPanel obtenerPanel(int valor) {
+        return switch (valor) {
+            case 100 -> m100;
+            case 500 -> m500;
+            case 1000 -> m1000;
+            default -> throw new IllegalStateException("Valor de moneda no soportado: " + valor);
+        };
+    }
 
-    @Override
-    public void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        Graphics2D g2 = (Graphics2D) g;
+    private void agregarMonedaAPanel(MonedasBoton monedaVista) {
+        int valor = monedaVista.getMoneda().getValor();
+        obtenerPanel(valor).add(monedaVista);
+        obtenerListaBotones(valor).add(monedaVista);
     }
 
     //no me gusta tampoco, pero que se le va a hacer

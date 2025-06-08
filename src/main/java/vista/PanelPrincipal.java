@@ -39,6 +39,9 @@ public class PanelPrincipal extends JPanel implements ActionListener {//se ve en
                     panelComprador.actionPerformed(e);
                     System.out.println("alguien quiere vuelto");
                 }
+                case "retirar" ->{
+                    panelComprador.actionPerformed(e);
+                }
                 default -> System.out.println("Error");
             }
         }

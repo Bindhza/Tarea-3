@@ -8,12 +8,12 @@ import java.util.Collections;
  */
 public class Comprador {
     private int saldo;
-    private final Deposito<Producto> productos;
+    private final ArrayList<Producto> productos;
     private final ArrayList<Moneda> monedas;
 
 
     public Comprador(int monto) {
-        productos = new Deposito<>();
+        productos = new ArrayList<>();
         monedas = new ArrayList<>();
         MonedaFactory generador = MonedaFactory.obtenerGen();
         int monedas1000 = monto / 1000;
@@ -33,6 +33,9 @@ public class Comprador {
         }
     }
 
+    public ArrayList<Producto> getProductos() {
+        return productos;
+    }
     /**
      * Retorna el vuelto recibido en pesos
      * @return un entero que representa el vuelto recibido
@@ -62,7 +65,7 @@ public class Comprador {
         if(p == null){
             throw new NoHayProductoException();
         }
-        productos.addObjeto(p);
+        productos.add(p);
     }
 
 

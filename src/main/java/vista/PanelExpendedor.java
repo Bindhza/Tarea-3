@@ -50,6 +50,7 @@ public class PanelExpendedor extends JPanel implements ActionListener {
         producto.setOpaque(false);
         producto.setBounds(112,0,95,95);
         producto.addActionListener(this);
+        producto.setName("retirar");
         bottomPanel.add(producto);
 
         panelVuelto = new JPanel();
@@ -243,6 +244,7 @@ public class PanelExpendedor extends JPanel implements ActionListener {
             try {
                 comprador.retirarProducto(expendedor);
                 producto.setIcon(null);
+                padre.actionPerformed(e);
             } catch (NoHayProductoException ex) {
                 System.out.println("no hay producto");
             }

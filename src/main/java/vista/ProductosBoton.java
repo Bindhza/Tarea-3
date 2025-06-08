@@ -3,20 +3,32 @@ package vista;
 import modelo.Producto;
 
 import javax.swing.*;
+import java.awt.*;
 
-public abstract class ProductosBoton extends JButton {
+public class ProductosBoton extends JButton {
 
     private Producto producto;
+    private ImageIcon icono;
 
     public ProductosBoton(Producto prod){
         producto = prod;
-        this.setOpaque(false);
-        this.setContentAreaFilled(false);
-        this.setBorderPainted(false);
-        this.setFocusPainted(false);
+        setContentAreaFilled(false);
+        setBorderPainted(false);
+        setFocusPainted(false);
+        setOpaque(false);
+        setToolTipText("Serie = " + prod.getSerie());
+        icono = new ImageIcon(new ImageIcon(getClass().getResource("/"+prod.getIndice().nombre+"_producto.png"))
+                .getImage()
+                .getScaledInstance(40,40,Image.SCALE_SMOOTH));
+        setIcon(icono);
+        setPreferredSize(new Dimension(40,40));
     }
 
-    public Producto getProducto(){
-        return producto;
+    public void actualizarProducto(Producto prod){
+        producto = prod;
+        icono = new ImageIcon(new ImageIcon(getClass().getResource("/"+prod.getIndice().nombre+"_producto.png"))
+                .getImage()
+                .getScaledInstance(60,60,Image.SCALE_SMOOTH));setIcon(icono);
+        setToolTipText("Serie = " + prod.getSerie());
     }
 }

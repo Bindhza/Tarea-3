@@ -1,70 +1,56 @@
 package vista;
 
 import modelo.*;
-
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 
 public class PanelProductos extends JPanel {
+    private final Comprador comprador;
+    protected ArrayList<JPanel> paneles;
 
-    protected JPanel coca = new JPanel(new FlowLayout());
-    protected JPanel fanta = new JPanel(new FlowLayout());
-    protected JPanel sprite = new JPanel(new FlowLayout());
-    protected JPanel snicker = new JPanel(new FlowLayout());
-    protected JPanel super8 = new JPanel(new FlowLayout());
+    public PanelProductos(Comprador comprador) {
+        this.comprador = comprador;
 
+        setLayout(new BorderLayout());
 
-    public PanelProductos() {
-        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        crearTitulo();
-        crearEstructura();
-    }
+        JPanel panelTitulo = new JPanel(new BorderLayout());
+        panelTitulo.setPreferredSize(new Dimension(0, 80));
 
-    private void crearEstructura(){
-        coca.setOpaque(false);
-        fanta.setOpaque(false);
-        sprite.setOpaque(false);
-        snicker.setOpaque(false);
-        super8.setOpaque(false);
-        this.add(coca);
-        this.add(fanta);
-        this.add(sprite);
-        this.add(snicker);
-        this.add(super8);
-    }
-
-    private void crearTitulo() {
-        JLabel titulo = new JLabel();
-        titulo.setText("Productos");
-        titulo.setHorizontalAlignment(SwingConstants.CENTER);
-        titulo.setVerticalAlignment(SwingConstants.CENTER);
-        titulo.setForeground(Color.RED);
+        JLabel titulo = new JLabel("PRODUCTOS", SwingConstants.CENTER);
         titulo.setFont(new Font("Tahoma", Font.BOLD, 33));
-        titulo.setPreferredSize(new Dimension(912, 95));
-        titulo.setAlignmentX(Component.CENTER_ALIGNMENT);
-        titulo.setAlignmentY(Component.CENTER_ALIGNMENT);
-        add(titulo);
-        setProducto(new CocaBoton(15));
-        setProducto(new CocaBoton(12));
+        titulo.setForeground(Color.RED);
+        panelTitulo.add(titulo, BorderLayout.CENTER);
 
+        add(panelTitulo, BorderLayout.NORTH);
+
+        JPanel panelProductos = new JPanel();
+        panelProductos.setLayout(new BoxLayout(panelProductos, BoxLayout.Y_AXIS));
+        paneles = new ArrayList<>();
+
+        for(IndiceProductos i: IndiceProductos.values()) {
+            JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 5));
+            panel.setName(i.nombre);
+            panel.setBorder(BorderFactory.createTitledBorder(i.nombre));
+            paneles.add(panel);
+            panelProductos.add(panel);
+        }
+
+        add(panelProductos, BorderLayout.CENTER);
+
+        for(Producto p: comprador.getProductos()) {
+            paneles.get(p.getIndice().ordinal()).add(new ProductosBoton(p));
+        }
     }
 
-    public void setProducto(ProductosBoton prod){ //falta crear los botones
+    public void actualizarPanel() {
+        Producto ultimoProducto = comprador.getProductos().getLast();
+        setProducto(ultimoProducto);
+    }
 
-        if(prod.getProducto() instanceof CocaCola){
-            coca.add(prod);
-        }
-        else if (prod.getProducto() instanceof Sprite){
-            sprite.add(prod);
-        }
-        else if (prod.getProducto() instanceof Fanta){
-            fanta.add(prod);
-        }
-        else if (prod.getProducto() instanceof Snickers){
-            snicker.add(prod);
-        }
-        else if (prod.getProducto() instanceof Super8){
-            super8.add(prod);
-        }
+    public void setProducto(Producto prod) {
+        paneles.get(prod.getIndice().ordinal()).add(new ProductosBoton(prod));
+        revalidate();
+        repaint();
     }
 }
