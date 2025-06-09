@@ -2,17 +2,20 @@ package vista;
 
 import modelo.Comprador;
 import modelo.Expendedor;
-import modelo.Snickers;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * Panel que guarda todo lo relacionado con un comprador
+ * tiene dos sub paneles que guardan las monedas y los productos
+ */
+
 public class PanelComprador extends JPanel implements ActionListener{
-    private PanelMonedas panelMonedas;
-    private PanelProductos panelProductos;
-    JPanel padre;
+    private final PanelMonedas panelMonedas;
+    private final PanelProductos panelProductos;
     public PanelComprador(Expendedor exp, Comprador comp, ActionListener padre) {
         panelMonedas = new PanelMonedas(exp, comp, padre);
         panelMonedas.setBackground(new Color(166, 166, 166));

@@ -85,17 +85,13 @@ public class Expendedor {
 
     /**
      * metodo principal de Expendedor con el cual se compra un producto, lo guarda en su deposito
-     * @param codigo el codigo que identifica al producto
+     * @param indice el codigo que identifica al producto
      * @throws NoHayProductoException en caso de que el codigo no lo maneje la maquina
      * o si el producto está fuera de stock
      * @throws PagoInsuficienteException si el monto pagado no es suficiente
      */
-    public void comprarProducto(int codigo) throws NoHayProductoException, PagoInsuficienteException {
+    public void comprarProducto(IndiceProductos indice) throws NoHayProductoException, PagoInsuficienteException {
 
-        if (codigo <= 0 || codigo > 5){
-            throw new NoHayProductoException();
-        }
-        IndiceProductos indice = IndiceProductos.values()[codigo - 1];
         if (indice.precio > saldo){
             soltarSaldo();
             throw new PagoInsuficienteException();
@@ -105,6 +101,19 @@ public class Expendedor {
         monedasGanadas.dumpDeposito(monedasSaldo);
 
         MonedaFactory generador = MonedaFactory.obtenerGen();
+
+        Deposito<? extends Producto> productos = switch (indice) {
+            case CocaCola ->  cocacola;
+            case Fanta    ->  fanta;
+            case Sprite   ->  sprite;
+            case Super8   ->  super8;
+            case Snickers ->  snicker;
+        };
+
+        if (productos.estaVacio()){
+            throw new NoHayProductoException();
+        }
+
         int monedas1000 = vuelto / 1000;
         vuelto %= 1000;
         int monedas500 = vuelto / 500;
@@ -119,18 +128,6 @@ public class Expendedor {
         }
         for(int i = 0; i < monedas100; i++){
             monedasVuelto.addObjeto(generador.generarMoneda100());
-        }
-
-        Deposito<? extends Producto> productos = switch (indice) {
-            case CocaCola ->  cocacola;
-            case Fanta    ->  fanta;
-            case Sprite   ->  sprite;
-            case Super8   ->  super8;
-            case Snickers ->  snicker;
-        };
-
-        if (productos.estaVacio()){
-            throw new NoHayProductoException();
         }
 
         productoComprado = productos.getObjeto();

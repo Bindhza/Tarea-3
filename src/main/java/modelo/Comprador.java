@@ -50,7 +50,6 @@ public class Comprador {
         }
         saldo += m.getValor();
         monedas.add(m);
-        Collections.sort(monedas);
     }
 
     public void quitarMoneda(Moneda m){

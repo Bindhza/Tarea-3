@@ -9,17 +9,28 @@ import java.awt.event.ActionListener;
 import java.net.URL;
 import java.util.ArrayList;
 
+/**
+ * Panel que maneja compras de un comprador en un expendedor
+ */
 public class PanelExpendedor extends JPanel implements ActionListener {
-    private JPanel panelBotones, panelVuelto;
+    private final JPanel panelBotones;
+    private final JPanel panelVuelto;
     private MonedasBoton botonVuelto;
-    private JLabel titulo,saldo;
-    private JButton producto;
-    private Image imagenExpendedor;
+    private JLabel saldo;
+    private final JButton producto;
+    private final Image imagenExpendedor;
     private boolean compraErronea;
     private final ArrayList<JButton> botonesCompra, botonesVitrina;
     private final Expendedor expendedor;
     private final Comprador comprador;
-    private ActionListener padre;
+    private final ActionListener padre;
+
+    /**
+     * Inicializa un panel con BorderLayout, con un título arriba, botones de vuelto y producto
+     * abajo y los productos al centro
+     * @param exp el expendedor asociado
+     * @param padre el panel que generó este panel
+     */
     public PanelExpendedor(Expendedor exp, Comprador comp, ActionListener padre) {
         this.setLayout(new BorderLayout());
         this.padre = padre;
@@ -71,6 +82,11 @@ public class PanelExpendedor extends JPanel implements ActionListener {
         repaint();
     }
 
+    /**
+     * Crea todos los botones para comprar y los guarda en un arreglo
+     * @param panel el panel donde viviran estos botones
+     * @return el arreglo de botones
+     */
     private ArrayList<JButton> crearBotonesVitrina(JPanel panel) {
         IndiceProductos[] productos = IndiceProductos.values();
         ArrayList<JButton> botones = new ArrayList<>();
@@ -100,6 +116,10 @@ public class PanelExpendedor extends JPanel implements ActionListener {
         botonesVitrina.get(codigo).setToolTipText("<html> Stock = " + expendedor.obtenerStock()[codigo]+ "<br>Precio = $"+ IndiceProductos.values()[codigo].precio+"</html>");
     }
 
+    /**
+     * Instancia los botones para comprar los productos, y los guarda en un ArrayList
+     * @return ArrayList con los botones
+     */
     private ArrayList<JButton> crearBotones() {
         ArrayList<JButton> botones = new ArrayList<>();
         for(int i = 1; i <= 5; i++){
@@ -140,18 +160,18 @@ public class PanelExpendedor extends JPanel implements ActionListener {
         panelBotones.add(new JLabel(""));
     }
 
-    private Moneda crearNuevoVuelto(){
-        Moneda monedaVieja;
-        if(botonVuelto == null){
-            monedaVieja = null;
-        } else {
-            monedaVieja = botonVuelto.getMoneda();
+    /**
+     * crea una nueva moneda en el vuelto en caso de que quede vuelto, de lo contrario simplemente borra la actual
+     * y no hace nada mas
+     */
+    private void crearNuevoVuelto(){
+        if (botonVuelto != null) {
             panelVuelto.removeAll();
         }
         Moneda m = expendedor.getVuelto();
         if (m == null){
             botonVuelto = null;
-            return monedaVieja;
+            return;
         }
         MonedasBoton boton = new MonedasBoton(m);
         boton.setPreferredSize(new Dimension(60,60));
@@ -161,10 +181,9 @@ public class PanelExpendedor extends JPanel implements ActionListener {
         boton.addActionListener(padre);
         panelVuelto.add(boton);
         botonVuelto = boton;
-        return monedaVieja;
     }
     private void crearTitulo() {
-        titulo = new JLabel();
+        JLabel titulo = new JLabel();
         titulo.setPreferredSize(new Dimension(1292,720/8));
         titulo.setText("Maquina Expendedora");
         titulo.setHorizontalAlignment(SwingConstants.CENTER);
@@ -195,20 +214,24 @@ public class PanelExpendedor extends JPanel implements ActionListener {
         g2.drawImage(imagenExpendedor, 20, 100, imagenExpendedor.getWidth(this), imagenExpendedor.getHeight(this), this);
     }
 
+    /**
+     * Maneja todos los casos del expendedor, en caso de tocar el botón de vuelto o el de producto
+     * el padre de este panel igual se entera
+     * @param e the event to be processed
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(!(e.getSource() instanceof JButton)){return;}
+        if(!(e.getSource() instanceof JButton boton)){return;}
         if(e.getSource() == botonVuelto){
             crearNuevoVuelto();
             revalidate();
             repaint();
-            System.out.println("hee");
             return;
         }
         if(botonesCompra.contains((JButton) e.getSource())){
-            int codigo = ((JButton) e.getSource()).getName().charAt(0) - '0';
+            int codigo = ((JButton) e.getSource()).getName().charAt(0) - '0'-1;
             try {
-                expendedor.comprarProducto(codigo);
+                expendedor.comprarProducto(IndiceProductos.values()[codigo]);
                 ImageIcon imagenProducto = switch(expendedor.verProducto()){
                     case CocaCola -> new ImageIcon(getClass().getResource("/cocacola_producto.png"));
                     case Sprite -> new ImageIcon(getClass().getResource("/sprite_producto.png"));
@@ -217,7 +240,7 @@ public class PanelExpendedor extends JPanel implements ActionListener {
                     case Snickers -> new ImageIcon(getClass().getResource("/snickers_producto.png"));
                 };
                 producto.setIcon(imagenProducto);
-                actualizarLeyendaVitrina(codigo-1);
+                actualizarLeyendaVitrina(codigo);
                 if (botonVuelto != null){
                     return;
                 }
@@ -251,7 +274,6 @@ public class PanelExpendedor extends JPanel implements ActionListener {
             return;
         }
         if(botonesVitrina.contains((JButton) e.getSource())){
-            JButton boton = (JButton) e.getSource();
             int codigo = boton.getName().charAt(0) - '0' + 1;
             expendedor.rellenarDeposito(codigo,5);
             actualizarLeyendaVitrina(codigo-1);

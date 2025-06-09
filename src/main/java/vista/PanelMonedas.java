@@ -9,6 +9,9 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
+/**
+ * Panel que guarda las monedas de un comprador
+ */
 public class PanelMonedas extends JPanel implements ActionListener {
 
     private final JPanel m100, m500, m1000;
@@ -16,14 +19,15 @@ public class PanelMonedas extends JPanel implements ActionListener {
     private final Comprador comp;
     private final Expendedor exp;
     private ArrayList<Moneda> cacheMonedas;
-    private ActionListener padre;
+    private final ActionListener padre;
+
     public PanelMonedas(Expendedor exp, Comprador comp, ActionListener padre){
         this.comp = comp;
         this.exp = exp;
         this.padre = padre;
         this.setLayout(new GridLayout(4,1));
 
-        cacheMonedas = new ArrayList<>(comp.obtenerMonedero());
+        cacheMonedas = new ArrayList<>();
         JLabel titulo = new JLabel("Monedas");
         titulo.setFont(new Font("Tahoma", Font.BOLD, 23));
         titulo.setHorizontalAlignment(SwingConstants.CENTER);
@@ -43,20 +47,12 @@ public class PanelMonedas extends JPanel implements ActionListener {
         this.add(m100);
         this.add(m500);
         this.add(m1000);
-        crearMonedas();
+        actualizarPaneles();
     }
 
-    public void crearMonedas(){
-        ArrayList<Moneda> monedas = comp.obtenerMonedero();
-        for(Moneda m : monedas){
-            MonedasBoton monedaVista = new MonedasBoton(m);
-            monedaVista.setName("monedaPanel");
-            monedaVista.setPreferredSize(new Dimension(60,60));
-            monedaVista.addActionListener(this);
-            agregarMonedaAPanel(monedaVista);
-        }
-    }
-
+    /**
+     * Verifica si se eliminaron o agregaron monedas al comprador, y las agrega a los paneles respectivos
+     */
     private void actualizarPaneles(){
         if(cacheMonedas.size() == comp.obtenerMonedero().size()){return;}
         if (cacheMonedas.size() > comp.obtenerMonedero().size()){
@@ -117,13 +113,16 @@ public class PanelMonedas extends JPanel implements ActionListener {
         };
     }
 
+    /**
+     * agrega una representacion visual de una moneda al panel
+     * @param monedaVista la nueva representacion a agregar
+     */
     private void agregarMonedaAPanel(MonedasBoton monedaVista) {
         int valor = monedaVista.getMoneda().getValor();
         obtenerPanel(valor).add(monedaVista);
         obtenerListaBotones(valor).add(monedaVista);
     }
 
-    //no me gusta tampoco, pero que se le va a hacer
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() instanceof MonedasBoton){
@@ -131,14 +130,12 @@ public class PanelMonedas extends JPanel implements ActionListener {
             if(((MonedasBoton) e.getSource()).getName().equals("vuelto")){
                 comp.darMoneda(((MonedasBoton) e.getSource()).getMoneda());
                 actualizarPaneles();
-                System.out.println(comp.obtenerMonedero());
-                return;
+            } else {
+                comp.quitarMoneda(m);
+                exp.insertarMoneda(m);
+                actualizarPaneles();
+                padre.actionPerformed(e);
             }
-            System.out.println("no es vuelto");
-            comp.quitarMoneda(m);
-            exp.insertarMoneda(m);
-            actualizarPaneles();
-            padre.actionPerformed(e);
         }
     }
 }

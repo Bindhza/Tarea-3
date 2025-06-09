@@ -8,9 +8,12 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class PanelPrincipal extends JPanel implements ActionListener {//se ve en el centro de la ventana
-    private PanelComprador panelComprador;
-    private PanelExpendedor panelExpendedor;
+/**
+ * Panel que contiene todo un expendedor y el comprador que interactúa con este
+ */
+public class PanelPrincipal extends JPanel implements ActionListener {
+    final private PanelComprador panelComprador;
+    final private PanelExpendedor panelExpendedor;
 
     public PanelPrincipal(Expendedor exp, Comprador comp) {
         setLayout(new BoxLayout(this,BoxLayout.X_AXIS));
@@ -19,29 +22,22 @@ public class PanelPrincipal extends JPanel implements ActionListener {//se ve en
         panelExpendedor.setBackground(new Color(62,62,62));
         panelComprador = new PanelComprador(exp, comp,this);
 
-
         panelExpendedor.setPreferredSize(new Dimension(428,720));
         panelComprador.setPreferredSize(new Dimension(852,720));
-        this.add(panelExpendedor);
-        this.add(panelComprador);
+        add(panelExpendedor);
+        add(panelComprador);
     }
 
+    /**
+     * Se pasan eventos entre ventanas, sin modificar el estado externamente
+     * @param e the event to be processed
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(e.getSource() instanceof JButton) {
-            JButton boton = (JButton) e.getSource();
+        if(e.getSource() instanceof JButton boton) {
             switch (boton.getName()) {
-                case "monedaPanel" -> {
-                    System.out.println("evento desde panelmonedas!!");
-                    panelExpendedor.actionPerformed(e);
-                }
-                case "vuelto" -> {
-                    panelComprador.actionPerformed(e);
-                    System.out.println("alguien quiere vuelto");
-                }
-                case "retirar" ->{
-                    panelComprador.actionPerformed(e);
-                }
+                case "monedaPanel" -> panelExpendedor.actionPerformed(e);
+                case "vuelto", "retirar" -> panelComprador.actionPerformed(e);
                 default -> System.out.println("Error");
             }
         }

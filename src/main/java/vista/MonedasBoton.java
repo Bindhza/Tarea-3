@@ -7,6 +7,10 @@ import java.awt.*;
 
 import java.net.URL;
 
+
+/**
+ * Boton que guarda una moneda
+ */
 public class MonedasBoton extends JButton{
 
     private URL url;

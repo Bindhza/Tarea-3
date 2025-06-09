@@ -5,10 +5,17 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
+/**
+ * Panel que guarda un inventario de productos
+ */
 public class PanelProductos extends JPanel {
     private final Comprador comprador;
     protected ArrayList<JPanel> paneles;
 
+    /**
+     * Crea un panel que contiene los productos de un comprador específico
+     * @param comprador el comprador del que se extrae su inventario
+     */
     public PanelProductos(Comprador comprador) {
         this.comprador = comprador;
 
@@ -17,9 +24,9 @@ public class PanelProductos extends JPanel {
         JPanel panelTitulo = new JPanel(new BorderLayout());
         panelTitulo.setPreferredSize(new Dimension(0, 80));
 
-        JLabel titulo = new JLabel("PRODUCTOS", SwingConstants.CENTER);
+        JLabel titulo = new JLabel("Productos", SwingConstants.CENTER);
         titulo.setFont(new Font("Tahoma", Font.BOLD, 33));
-        titulo.setForeground(Color.RED);
+        titulo.setForeground(Color.GRAY);
         panelTitulo.add(titulo, BorderLayout.CENTER);
 
         add(panelTitulo, BorderLayout.NORTH);
@@ -43,11 +50,18 @@ public class PanelProductos extends JPanel {
         }
     }
 
+    /**
+     * Actualiza el panel con el deposito de productos del comprador, añadiendo el ultimo producto
+     */
     public void actualizarPanel() {
         Producto ultimoProducto = comprador.getProductos().getLast();
         setProducto(ultimoProducto);
     }
 
+    /**
+     * Añade un producto al panel de productos respectivo
+     * @param prod el producto a añadir al panel
+     */
     public void setProducto(Producto prod) {
         paneles.get(prod.getIndice().ordinal()).add(new ProductosBoton(prod));
         revalidate();
